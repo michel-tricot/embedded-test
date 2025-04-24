@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Node Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 400px;
+        }
+        .form-group {
+            margin: 1rem 0;
+        }
+        input {
+            padding: 0.5rem;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .create-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .login-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        #message {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .error {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        .user-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #e3f2fd;
+            border-radius: 4px;
+            display: none;
+        }
+        .user-info.visible {
+            display: block;
+        }
+        .logout-btn {
+            background-color: #f44336;
+            color: white;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-group">
+            <input type="email" id="email" placeholder="Enter email address" required>
+            <div class="button-group">
+                <button class="create-btn" onclick="createUser()">Create User</button>
+                <button class="login-btn" onclick="loginUser()">Login</button>
+            </div>
+        </div>
+        
+        <div id="message"></div>
+        <div id="userInfo" class="user-info">
+            <p>Logged in as: <span id="loggedInEmail"></span></p>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+
+        // Cookie functions
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function eraseCookie(name) {
+            document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        }
+
+        function showMessage(text, isError = false) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = isError ? 'error' : 'success';
+        }
+
+        function updateUI() {
+            const userInfo = document.getElementById('userInfo');
+            const loggedInEmail = document.getElementById('loggedInEmail');
+            const emailInput = document.getElementById('email');
+            
+            if (currentUser) {
+                userInfo.classList.add('visible');
+                loggedInEmail.textContent = currentUser;
+                emailInput.value = '';
+            } else {
+                userInfo.classList.remove('visible');
+            }
+        }
+
+        async function createUser() {
+            const email = document.getElementById('email').value;
+            
+            if (!email) {
+                showMessage('Please enter an email address', true);
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    currentUser = email;
+                    setCookie('userEmail', email, 7); // Store for 7 days
+                    updateUI();
+                    showMessage('User created and logged in successfully!');
+                } else {
+                    showMessage(data.error || 'Failed to create user', true);
+                }
+            } catch (error) {
+                showMessage('Error creating user', true);
+            }
+        }
+
+        async function loginUser() {
+            const email = document.getElementById('email').value;
+            
+            if (!email) {
+                showMessage('Please enter an email address', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/users/${encodeURIComponent(email)}`);
+                
+                if (response.ok) {
+                    currentUser = email;
+                    setCookie('userEmail', email, 7); // Store for 7 days
+                    updateUI();
+                    showMessage('Login successful!');
+                } else {
+                    showMessage('User not found', true);
+                }
+            } catch (error) {
+                showMessage('Error logging in', true);
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            eraseCookie('userEmail');
+            updateUI();
+            showMessage('Logged out successfully');
+        }
+
+        // Check for existing login on page load
+        window.onload = async function() {
+            const savedEmail = getCookie('userEmail');
+            if (savedEmail) {
+                try {
+                    const response = await fetch(`/api/users/${encodeURIComponent(savedEmail)}`);
+                    
+                    if (response.ok) {
+                        currentUser = savedEmail;
+                        updateUI();
+                    } else {
+                        eraseCookie('userEmail');
+                    }
+                } catch (error) {
+                    console.error('Error checking saved login:', error);
+                    eraseCookie('userEmail');
+                }
+            }
+        };
+    </script>
+</body>
+</html> 
