@@ -7,13 +7,18 @@ const port = 3000;
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// Serve static files from the current directory
-app.use(express.static(__dirname));
+// Serve static files from the static directory
+app.use(express.static(path.join(__dirname, '../static')));
 
 // Route for the root path
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, '../static/index.html'));
 });
+
+// Helper function to generate unique IDs
+const generateUniqueId = (prefix) => {
+    return `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+};
 
 // Endpoint to create a new user
 app.post('/api/users', (req, res) => {
@@ -25,7 +30,11 @@ app.post('/api/users', (req, res) => {
     }
 
     try {
-        const newUser = db.addUser(email);
+        // Generate unique IDs
+        const airbyteWorkspaceId = generateUniqueId('workspace');
+        const airbyteDestinationId = generateUniqueId('destination');
+
+        const newUser = db.addUser(email, airbyteWorkspaceId, airbyteDestinationId);
         res.status(201).json(newUser);
     } catch (error) {
         if (error.message === 'Email already exists') {

@@ -25,7 +25,7 @@ const db = {
         return users.find(user => user.email === email);
     },
 
-    addUser: (email) => {
+    addUser: (email, airbyteWorkspaceId, airbyteDestinationId) => {
         const users = db.read();
         
         // Check if user already exists
@@ -33,10 +33,32 @@ const db = {
             throw new Error('Email already exists');
         }
 
-        const newUser = { email };
+        const newUser = { 
+            email,
+            airbyte_workspace_id: airbyteWorkspaceId,
+            airbyte_destination_id: airbyteDestinationId
+        };
         users.push(newUser);
         db.write(users);
         return newUser;
+    },
+
+    updateUser: (email, airbyteWorkspaceId, airbyteDestinationId) => {
+        const users = db.read();
+        const userIndex = users.findIndex(user => user.email === email);
+        
+        if (userIndex === -1) {
+            throw new Error('User not found');
+        }
+
+        users[userIndex] = {
+            ...users[userIndex],
+            airbyte_workspace_id: airbyteWorkspaceId,
+            airbyte_destination_id: airbyteDestinationId
+        };
+        
+        db.write(users);
+        return users[userIndex];
     }
 };
 
