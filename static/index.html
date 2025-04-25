@@ -11,10 +11,7 @@
         <h1>Embedded Demo</h1>
         <div class="form-group">
             <input type="email" id="email" placeholder="Enter email address" required>
-            <div class="button-group">
-                <button class="create-btn" onclick="createUser()">Create User</button>
-                <button class="login-btn" onclick="loginUser()">Login</button>
-            </div>
+            <button class="action-btn" onclick="handleUserAction()">Login or Create</button>
         </div>
         
         <div id="message"></div>
@@ -24,118 +21,9 @@
         </div>
     </div>
 
+    <script src="script.js"></script>
+    
     <script>
-        let currentUser = null;
-
-        // Cookie functions
-        function setCookie(name, value, days) {
-            let expires = "";
-            if (days) {
-                const date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
-        }
-
-        function getCookie(name) {
-            const nameEQ = name + "=";
-            const ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-
-        function eraseCookie(name) {
-            document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        }
-
-        function showMessage(text, isError = false) {
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = text;
-            messageDiv.className = isError ? 'error' : 'success';
-        }
-
-        function updateUI() {
-            const userInfo = document.getElementById('userInfo');
-            const loggedInEmail = document.getElementById('loggedInEmail');
-            const emailInput = document.getElementById('email');
-            
-            if (currentUser) {
-                userInfo.classList.add('visible');
-                loggedInEmail.textContent = currentUser;
-                emailInput.value = '';
-            } else {
-                userInfo.classList.remove('visible');
-            }
-        }
-
-        async function createUser() {
-            const email = document.getElementById('email').value;
-            
-            if (!email) {
-                showMessage('Please enter an email address', true);
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/users', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email }),
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    currentUser = email;
-                    setCookie('userEmail', email, 7); // Store for 7 days
-                    updateUI();
-                    showMessage('User created and logged in successfully!');
-                } else {
-                    showMessage(data.error || 'Failed to create user', true);
-                }
-            } catch (error) {
-                showMessage('Error creating user', true);
-            }
-        }
-
-        async function loginUser() {
-            const email = document.getElementById('email').value;
-            
-            if (!email) {
-                showMessage('Please enter an email address', true);
-                return;
-            }
-
-            try {
-                const response = await fetch(`/api/users/${encodeURIComponent(email)}`);
-                
-                if (response.ok) {
-                    currentUser = email;
-                    setCookie('userEmail', email, 7); // Store for 7 days
-                    updateUI();
-                    showMessage('Login successful!');
-                } else {
-                    showMessage('User not found', true);
-                }
-            } catch (error) {
-                showMessage('Error logging in', true);
-            }
-        }
-
-        function logout() {
-            currentUser = null;
-            eraseCookie('userEmail');
-            updateUI();
-            showMessage('Logged out successfully');
-        }
-
         // Check for existing login on page load
         window.onload = async function() {
             const savedEmail = getCookie('userEmail');

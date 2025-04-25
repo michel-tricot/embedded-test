@@ -1,5 +1,8 @@
 [
   {
     "email": "michel@airbyte.io"
+  },
+  {
+    "email": "test@toto.com"
   }
 ]

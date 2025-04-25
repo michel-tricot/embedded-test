@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const db = require('./db');
@@ -65,4 +67,13 @@ app.get('/api/users/:email', (req, res) => {
 // Start the server
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
+    console.log('Environment variables loaded:');
+    console.log('ORGANIZATION_ID:', process.env.ORGANIZATION_ID);
+    console.log('CLIENT_ID:', process.env.CLIENT_ID ? '***' : 'not set');
+    console.log('CLIENT_SECRET:', process.env.CLIENT_SECRET ? '***' : 'not set');
+    console.log('AWS_ACCESS_KEY:', process.env.AWS_ACCESS_KEY ? '***' : 'not set');
+    console.log('AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY ? '***' : 'not set');
+    console.log('S3_BUCKET:', process.env.S3_BUCKET);
+    console.log('S3_BUCKET_REGION:', process.env.S3_BUCKET_REGION);
+    console.log('S3_BUCKET_PREFIX:', process.env.S3_BUCKET_PREFIX);
 }); 
