@@ -1,8 +1,7 @@
 [
   {
-    "email": "michel@airbyte.io"
-  },
-  {
-    "email": "test@toto.com"
+    "email": "test@toto.com",
+    "airbyte_workspace_id": "c97d1e00-07b9-4aa1-aa20-5818f5970d70",
+    "airbyte_destination_id": "fd5875a9-a5c7-40d2-868f-78a705ce2e91"
   }
 ]
