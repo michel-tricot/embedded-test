@@ -62,7 +62,7 @@ app.get('/api/users/:email', (req, res) => {
 
 // Endpoint to create a widget token
 // This endpoint should test that the user is actually authenticated.
-app.post('/api/widgets/token', async (req, res) => {
+app.post('/api/airbyte/token', async (req, res) => {
     const { email, allowedOrigin } = req.body;
     
     // Validate input
@@ -76,7 +76,7 @@ app.post('/api/widgets/token', async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        const widgetToken = await api.generateWidgetToken(process.env.ORGANIZATION_ID, user.workspaceId, allowedOrigin);
+        const widgetToken = await api.generateWidgetToken(process.env.ORGANIZATION_ID, user.airbyte_workspace_id, allowedOrigin);
         res.json({ token: widgetToken });
     } catch (error) {
         console.error('Error generating widget token:', error);

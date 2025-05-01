@@ -156,8 +156,8 @@ export async function generateWidgetToken(organizationId, workspaceId, allowedOr
             })
         });
 
-        const data = await response.json();
-        return data.token;
+        const token = await response.text();
+        return token;
     } catch (error) {
         console.error('Error generating widget token:', error);
         throw error;

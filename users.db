@@ -3,5 +3,20 @@
     "email": "test@toto.com",
     "airbyte_workspace_id": "c97d1e00-07b9-4aa1-aa20-5818f5970d70",
     "airbyte_destination_id": "fd5875a9-a5c7-40d2-868f-78a705ce2e91"
+  },
+  {
+    "email": "hhh.hhh.com",
+    "airbyte_workspace_id": "3f448c2f-cd0f-438d-9af1-a31b61c4a6cb",
+    "airbyte_destination_id": "9dcbe061-48c9-492e-9680-81832cc8066b"
+  },
+  {
+    "email": "test@test.com",
+    "airbyte_workspace_id": "76746dc4-355b-465f-8a45-57daaf129eb1",
+    "airbyte_destination_id": "8c3e33df-03fe-494c-b921-43b109e95810"
+  },
+  {
+    "email": "abc@home.com",
+    "airbyte_workspace_id": "49e4a91d-a858-45c1-8fca-7303712541e7",
+    "airbyte_destination_id": "04cdb1f4-a41c-4464-9380-d2f1b8dc9b5f"
   }
 ]
