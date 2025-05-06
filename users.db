@@ -18,5 +18,40 @@
     "email": "abc@home.com",
     "airbyte_workspace_id": "49e4a91d-a858-45c1-8fca-7303712541e7",
     "airbyte_destination_id": "04cdb1f4-a41c-4464-9380-d2f1b8dc9b5f"
+  },
+  {
+    "email": "quinton@airbyte.io",
+    "airbyte_workspace_id": "adb44796-29f1-49fd-9611-d8513463c730",
+    "airbyte_destination_id": "613f4d80-52aa-4bb7-995b-076fcd15d281"
+  },
+  {
+    "email": "michel@airbyte.io",
+    "airbyte_workspace_id": "5e25e55e-35be-499a-8b29-40b47d337817",
+    "airbyte_destination_id": "4ba3cc7c-be97-4587-aae5-f5eec75b18ba"
+  },
+  {
+    "email": "michel.tricot@gmail.com",
+    "airbyte_workspace_id": "4b0b5b02-e074-405b-89e5-230bf705154a",
+    "airbyte_destination_id": "db06a8e7-58cf-4628-841f-5a751a7f5154"
+  },
+  {
+    "email": "ggg@toto.com",
+    "airbyte_workspace_id": "f1838e17-f4ed-4b69-a53f-4c9139b0af93",
+    "airbyte_destination_id": "a34e833b-f83c-4fa9-a5de-be56627bf41e"
+  },
+  {
+    "email": "abcdef@toto.com",
+    "airbyte_workspace_id": "0daf458e-a8f7-491d-9f60-6341353d163b",
+    "airbyte_destination_id": "66ba6906-a9a7-4de8-b659-a76736ec81d9"
+  },
+  {
+    "email": "qewrasdf@444.fco",
+    "airbyte_workspace_id": "c9e87f3f-3b7b-4c49-bd76-ef40187c906d",
+    "airbyte_destination_id": "a13d82f3-de3e-4555-ad8f-ed02440b2d84"
+  },
+  {
+    "email": "appl@abc.com",
+    "airbyte_workspace_id": "2d2001dc-048d-4924-93b0-0793b35439cb",
+    "airbyte_destination_id": "fc002d4b-c386-4bc8-a850-ba84a3606660"
   }
 ]

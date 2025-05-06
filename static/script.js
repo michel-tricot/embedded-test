@@ -62,6 +62,9 @@ async function updateUI() {
 
 async function handleUserAction() {
     const email = document.getElementById('email').value;
+    const spinner = document.getElementById('spinner');
+    const submitButton = document.querySelector('.action-btn');
+    const messageDiv = document.getElementById('message');
     
     if (!email) {
         showMessage('Please enter an email address', true);
@@ -69,6 +72,12 @@ async function handleUserAction() {
     }
 
     try {
+        // Show spinner and disable button, hide message
+        spinner.classList.add('visible');
+        submitButton.disabled = true;
+        messageDiv.textContent = '';
+        messageDiv.className = '';
+
         // First try to login
         const loginResponse = await fetch(`/api/users/${encodeURIComponent(email)}`);
         
@@ -101,6 +110,10 @@ async function handleUserAction() {
         }
     } catch (error) {
         showMessage('An error occurred', true);
+    } finally {
+        // Hide spinner and enable button
+        spinner.classList.remove('visible');
+        submitButton.disabled = false;
     }
 }
 
