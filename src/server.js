@@ -10,6 +10,28 @@ const port = 3000;
 // Middleware to parse JSON bodies
 app.use(express.json());
 
+// Middleware to read user from cookie
+app.use((req, res, next) => {
+    const cookies = req.headers.cookie?.split(';').reduce((acc, cookie) => {
+        const [key, value] = cookie.trim().split('=');
+        acc[key] = value;
+        return acc;
+    }, {}) || {};
+
+    const userEmail = cookies.userEmail;
+    if (userEmail) {
+        try {
+            const user = db.findUser(decodeURIComponent(userEmail));
+            if (user) {
+                req.user = user;
+            }
+        } catch (error) {
+            console.error('Error reading user from cookie:', error);
+        }
+    }
+    next();
+});
+
 // Serve static files from the static directory
 app.use(express.static(path.join(__dirname, '../static')));
 
@@ -63,20 +85,24 @@ app.get('/api/users/:email', (req, res) => {
 // Endpoint to create a widget token
 // This endpoint should test that the user is actually authenticated.
 app.post('/api/airbyte/token', async (req, res) => {
-    const { email, allowedOrigin } = req.body;
+    const { allowedOrigin } = req.body;
     
     // Validate input
-    if (!email || !allowedOrigin) {
-        return res.status(400).json({ error: 'email and allowedOrigin are required' });
+    if (!allowedOrigin) {
+        return res.status(400).json({ error: 'allowedOrigin is required' });
+    }
+
+    // Check if user is authenticated
+    if (!req.user) {
+        return res.status(401).json({ error: 'User not authenticated' });
     }
 
     try {
-        const user = db.findUser(email);
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        const widgetToken = await api.generateWidgetToken(process.env.ORGANIZATION_ID, user.airbyte_workspace_id, allowedOrigin);
+        const widgetToken = await api.generateWidgetToken(
+            process.env.ORGANIZATION_ID, 
+            req.user.airbyte_workspace_id, 
+            allowedOrigin
+        );
         res.json({ token: widgetToken });
     } catch (error) {
         console.error('Error generating widget token:', error);

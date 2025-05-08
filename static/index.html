@@ -52,7 +52,7 @@
     </script>
 
     <script type="module">
-        import { EmbeddedWidget } from "https://cdn.jsdelivr.net/npm/@airbyte-embedded/airbyte-embedded-widget@0.3.0/+esm";
+        import { AirbyteEmbeddedWidget } from "https://cdn.jsdelivr.net/npm/@airbyte-embedded/airbyte-embedded-widget@0.4.1/+esm";
 
         async function connectData() {
             try {
@@ -73,9 +73,8 @@
 
                 const { token } = await response.json();
                 
-                const widget = new EmbeddedWidget({
-                    token: token,
-                    hideButton: true
+                const widget = new AirbyteEmbeddedWidget({
+                    token: token
                 });
                 widget.open();
             } catch (error) {

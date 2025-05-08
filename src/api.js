@@ -145,19 +145,18 @@ export async function createDestination(workspaceId) {
  * @param {string} workspaceId - The ID of the workspace
  * @returns {Promise<string>} The widget token
  */
-export async function generateWidgetToken(organizationId, workspaceId, allowedOrigin) {
+export async function generateWidgetToken(workspaceId, allowedOrigin) {
     try {
-        const response = await makeAuthenticatedRequest('https://api.airbyte.com/v1/embedded/widget', {
+        const response = await makeAuthenticatedRequest('https://api.airbyte.com/v1/embedded/widget_token', {
             method: 'POST',
             body: JSON.stringify({
-                organizationId: organizationId,
                 workspaceId: workspaceId,
                 allowedOrigin: allowedOrigin,
             })
         });
 
-        const token = await response.text();
-        return token;
+        const data = await response.json();
+        return data.token;
     } catch (error) {
         console.error('Error generating widget token:', error);
         throw error;

@@ -53,5 +53,20 @@
     "email": "appl@abc.com",
     "airbyte_workspace_id": "2d2001dc-048d-4924-93b0-0793b35439cb",
     "airbyte_destination_id": "fc002d4b-c386-4bc8-a850-ba84a3606660"
+  },
+  {
+    "email": "ggg@test.com",
+    "airbyte_workspace_id": "ba254850-b169-459b-a2ff-2befed7127a3",
+    "airbyte_destination_id": "5ed649a0-a701-48d0-9c2a-d54a9b61a0e1"
+  },
+  {
+    "email": "aaa@toto.com",
+    "airbyte_workspace_id": "7f0cc22b-0b64-41eb-b42a-46d7f4e75ee3",
+    "airbyte_destination_id": "dcd0b9b9-bb15-4a10-a90a-2b62f4e5c9d5"
+  },
+  {
+    "email": "alex@toto.com",
+    "airbyte_workspace_id": "7b9f8eaa-3d19-461c-9af4-ddf8f22f281b",
+    "airbyte_destination_id": "5145f2f5-fc70-4714-9365-aac4c6095342"
   }
 ]
