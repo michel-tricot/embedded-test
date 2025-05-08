@@ -1,31 +1,5 @@
 let currentUser = null;
 
-// Cookie functions
-function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
-
-function getCookie(name) {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-}
-
-function eraseCookie(name) {
-    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-}
-
 function showMessage(text, isError = false) {
     const messageDiv = document.getElementById('message');
     messageDiv.textContent = text;
@@ -79,12 +53,18 @@ async function handleUserAction() {
         messageDiv.className = '';
 
         // First try to login
-        const loginResponse = await fetch(`/api/users/${encodeURIComponent(email)}`);
+        const loginResponse = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
         
         if (loginResponse.ok) {
             // User exists, log them in
+            const userData = await loginResponse.json();
             currentUser = email;
-            setCookie('userEmail', email, 7);
             updateUI();
             showMessage('Login successful!');
         } else {
@@ -101,7 +81,6 @@ async function handleUserAction() {
 
             if (createResponse.ok) {
                 currentUser = email;
-                setCookie('userEmail', email, 7);
                 updateUI();
                 showMessage('User created and logged in successfully!');
             } else {
@@ -117,9 +96,14 @@ async function handleUserAction() {
     }
 }
 
-function logout() {
-    currentUser = null;
-    eraseCookie('userEmail');
-    updateUI();
-    showMessage('Logged out successfully');
+async function logout() {
+    try {
+        await fetch('/api/logout', { method: 'POST' });
+        currentUser = null;
+        updateUI();
+        showMessage('Logged out successfully');
+    } catch (error) {
+        console.error('Error during logout:', error);
+        showMessage('Error during logout', true);
+    }
 } 

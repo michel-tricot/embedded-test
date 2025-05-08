@@ -6,19 +6,25 @@ const db = require('./db');
 const api = require('./api');
 const app = express();
 const port = 3000;
+const cookieParser = require('cookie-parser');
+
+// Helper function to set authentication cookie
+function setAuthCookie(res, email) {
+    res.cookie('userEmail', email, {
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+    });
+}
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(cookieParser());
 
 // Middleware to read user from cookie
 app.use((req, res, next) => {
-    const cookies = req.headers.cookie?.split(';').reduce((acc, cookie) => {
-        const [key, value] = cookie.trim().split('=');
-        acc[key] = value;
-        return acc;
-    }, {}) || {};
-
-    const userEmail = cookies.userEmail;
+    const userEmail = req.cookies.userEmail;
     if (userEmail) {
         try {
             const user = db.findUser(decodeURIComponent(userEmail));
@@ -55,6 +61,7 @@ app.post('/api/users', async (req, res) => {
         const destinationId = await api.createDestination(workspaceId);
 
         const newUser = db.addUser(email, workspaceId, destinationId);
+        setAuthCookie(res, email);
         res.status(201).json(newUser);
     } catch (error) {
         if (error.message === 'Email already exists') {
@@ -65,13 +72,18 @@ app.post('/api/users', async (req, res) => {
     }
 });
 
-// Endpoint to get a specific user
-app.get('/api/users/:email', (req, res) => {
-    const { email } = req.params;
+// Endpoint to login a user
+app.post('/api/login', (req, res) => {
+    const { email } = req.body;
+    
+    if (!email) {
+        return res.status(400).json({ error: 'Email is required' });
+    }
 
     try {
         const user = db.findUser(email);
         if (user) {
+            setAuthCookie(res, email);
             res.json(user);
         } else {
             res.status(404).json({ error: 'User not found' });
@@ -80,6 +92,14 @@ app.get('/api/users/:email', (req, res) => {
         console.error('Error reading user:', error);
         res.status(500).json({ error: 'Failed to read user' });
     }
+});
+
+// Endpoint to get current user information
+app.get('/api/users/me', (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ error: 'Not authenticated' });
+    }
+    res.json(req.user);
 });
 
 // Endpoint to create a widget token
@@ -108,6 +128,16 @@ app.post('/api/airbyte/token', async (req, res) => {
         console.error('Error generating widget token:', error);
         res.status(500).json({ error: 'Failed to generate widget token' });
     }
+});
+
+// Endpoint to handle logout
+app.post('/api/logout', (req, res) => {
+    res.clearCookie('userEmail', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+    });
+    res.json({ message: 'Logged out successfully' });
 });
 
 // Start the server

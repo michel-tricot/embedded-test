@@ -31,21 +31,15 @@
     <script>
         // Check for existing login on page load
         window.onload = async function() {
-            const savedEmail = getCookie('userEmail');
-            if (savedEmail) {
-                try {
-                    const response = await fetch(`/api/users/${encodeURIComponent(savedEmail)}`);
-                    
-                    if (response.ok) {
-                        currentUser = savedEmail;
-                        updateUI();
-                    } else {
-                        eraseCookie('userEmail');
-                    }
-                } catch (error) {
-                    console.error('Error checking saved login:', error);
-                    eraseCookie('userEmail');
+            try {
+                const response = await fetch('/api/users/me');
+                if (response.ok) {
+                    const userData = await response.json();
+                    currentUser = userData.email;
+                    updateUI();
                 }
+            } catch (error) {
+                console.error('Error checking authentication status:', error);
             }
         };
 
