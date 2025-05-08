@@ -52,40 +52,22 @@ async function handleUserAction() {
         messageDiv.textContent = '';
         messageDiv.className = '';
 
-        // First try to login
-        const loginResponse = await fetch('/api/login', {
+        const response = await fetch('/api/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ email }),
         });
-        
-        if (loginResponse.ok) {
-            // User exists, log them in
-            const userData = await loginResponse.json();
+
+        const data = await response.json();
+
+        if (response.ok) {
             currentUser = email;
             updateUI();
-            showMessage('Login successful!');
+            showMessage(response.status === 201 ? 'User created and logged in successfully!' : 'Login successful!');
         } else {
-            // User doesn't exist, create them
-            const createResponse = await fetch('/api/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email }),
-            });
-
-            const data = await createResponse.json();
-
-            if (createResponse.ok) {
-                currentUser = email;
-                updateUI();
-                showMessage('User created and logged in successfully!');
-            } else {
-                showMessage(data.error || 'Failed to create user', true);
-            }
+            showMessage(data.error || 'Failed to process request', true);
         }
     } catch (error) {
         showMessage('An error occurred', true);

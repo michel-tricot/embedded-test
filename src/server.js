@@ -46,6 +46,16 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../static/index.html'));
 });
 
+// Endpoint to handle logout
+app.post('/api/logout', (req, res) => {
+    res.clearCookie('userEmail', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+    });
+    res.json({ message: 'Logged out successfully' });
+});
+
 // Endpoint to create a new user
 app.post('/api/users', async (req, res) => {
     const { email } = req.body;
@@ -56,6 +66,13 @@ app.post('/api/users', async (req, res) => {
     }
 
     try {
+        // Check if user already exists
+        const existingUser = db.findUser(email);
+        if (existingUser) {
+            setAuthCookie(res, email);
+            return res.json(existingUser);
+        }
+
         // Create a new workspace and destination
         const workspaceId = await api.createWorkspace(email);
         const destinationId = await api.createDestination(workspaceId);
@@ -69,28 +86,6 @@ app.post('/api/users', async (req, res) => {
         }
         console.error('Error creating user:', error);
         res.status(500).json({ error: 'Failed to create user' });
-    }
-});
-
-// Endpoint to login a user
-app.post('/api/login', (req, res) => {
-    const { email } = req.body;
-    
-    if (!email) {
-        return res.status(400).json({ error: 'Email is required' });
-    }
-
-    try {
-        const user = db.findUser(email);
-        if (user) {
-            setAuthCookie(res, email);
-            res.json(user);
-        } else {
-            res.status(404).json({ error: 'User not found' });
-        }
-    } catch (error) {
-        console.error('Error reading user:', error);
-        res.status(500).json({ error: 'Failed to read user' });
     }
 });
 
@@ -128,16 +123,6 @@ app.post('/api/airbyte/token', async (req, res) => {
         console.error('Error generating widget token:', error);
         res.status(500).json({ error: 'Failed to generate widget token' });
     }
-});
-
-// Endpoint to handle logout
-app.post('/api/logout', (req, res) => {
-    res.clearCookie('userEmail', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
-    });
-    res.json({ message: 'Logged out successfully' });
 });
 
 // Start the server
