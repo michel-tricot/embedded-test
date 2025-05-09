@@ -20,6 +20,7 @@
         <div id="message"></div>
         <div id="userInfo" class="user-info">
             <p>Logged in as: <span id="loggedInEmail"></span></p>
+            <button id="connect-btn">Connect Data</button>
             <button class="logout-btn" onclick="logout()">Logout</button>
         </div>
     </div>
@@ -40,6 +41,41 @@
                 console.error('Error checking authentication status:', error);
             }
         };
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@airbyte-embedded/airbyte-embedded-widget@0.4.2"></script>
+    <script>
+        async function connectData() {
+            try {
+                const response = await fetch('/api/airbyte/token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        email: currentUser,
+                        allowedOrigin: window.location.origin
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch widget token');
+                }
+
+                const { token } = await response.json();
+                
+                const widget = new AirbyteEmbeddedWidget({
+                    token: token
+                });
+                widget.open();
+            } catch (error) {
+                console.error('Error connecting data:', error);
+                // You might want to show an error message to the user here
+            }
+        }
+
+        document.getElementById("connect-btn").addEventListener("click", connectData);
     </script>
 
 </body>

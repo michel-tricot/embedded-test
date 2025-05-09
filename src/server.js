@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const db = require('./db');
+const api = require('./airbyte_api');
 const app = express();
 const port = 3000;
 const cookieParser = require('cookie-parser');
@@ -92,10 +93,41 @@ app.get('/api/users/me', (req, res) => {
     res.json(req.user);
 });
 
+// Endpoint to create a widget token
+// This endpoint should test that the user is actually authenticated.
+app.post('/api/airbyte/token', async (req, res) => {
+    const { allowedOrigin } = req.body;
+    
+    // Validate input
+    if (!allowedOrigin) {
+        return res.status(400).json({ error: 'allowedOrigin is required' });
+    }
+
+    // Check if user is authenticated
+    if (!req.user) {
+        return res.status(401).json({ error: 'User not authenticated' });
+    }
+
+    try {
+        const widgetToken = await api.generateWidgetToken(
+            process.env.AIRBYTE_ORGANIZATION_ID, 
+            req.user.email, 
+            allowedOrigin
+        );
+        res.json({ token: widgetToken });
+    } catch (error) {
+        console.error('Error generating widget token:', error);
+        res.status(500).json({ error: 'Failed to generate widget token' });
+    }
+});
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
     console.log('Environment variables loaded:');
+    console.log('AIRBYTE_ORGANIZATION_ID:', process.env.AIRBYTE_ORGANIZATION_ID);
+    console.log('AIRBYTE_CLIENT_ID:', process.env.AIRBYTE_CLIENT_ID ? '***' : 'not set');
+    console.log('AIRBYTE_CLIENT_SECRET:', process.env.AIRBYTE_CLIENT_SECRET ? '***' : 'not set');
     console.log('AWS_ACCESS_KEY:', process.env.AWS_ACCESS_KEY ? '***' : 'not set');
     console.log('AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY ? '***' : 'not set');
     console.log('S3_BUCKET:', process.env.S3_BUCKET);
