@@ -22,7 +22,7 @@ function setAuthCookie(res, email) {
 app.use(express.json());
 app.use(cookieParser());
 
-// Middleware to read user from cookie
+// Fake Auth: read user from cookie
 app.use((req, res, next) => {
     const userEmail = req.cookies.userEmail;
     if (userEmail) {

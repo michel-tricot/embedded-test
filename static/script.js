@@ -9,28 +9,14 @@ function showMessage(text, isError = false) {
 async function updateUI() {
     const userInfo = document.getElementById('userInfo');
     const loggedInEmail = document.getElementById('loggedInEmail');
-    const workspaceId = document.getElementById('workspaceId');
     const emailInput = document.getElementById('email');
     
     if (currentUser) {
         userInfo.classList.add('visible');
         loggedInEmail.textContent = currentUser;
         emailInput.value = '';
-
-        // Fetch and display workspace ID
-        try {
-            const response = await fetch('/api/users/me');
-            if (response.ok) {
-                const userData = await response.json();
-                workspaceId.textContent = userData.airbyte_workspace_id;
-            }
-        } catch (error) {
-            console.error('Error fetching workspace ID:', error);
-            workspaceId.textContent = 'Error loading workspace ID';
-        }
     } else {
         userInfo.classList.remove('visible');
-        workspaceId.textContent = '';
     }
 }
 
