@@ -41,12 +41,11 @@
                 console.error('Error checking authentication status:', error);
             }
         };
-
     </script>
 
-    <script type="module">
-        import { AirbyteEmbeddedWidget } from "https://cdn.jsdelivr.net/npm/@airbyte-embedded/airbyte-embedded-widget@0.4.1/+esm";
 
+    <script src="https://cdn.jsdelivr.net/npm/@airbyte-embedded/airbyte-embedded-widget@0.4.2"></script>
+    <script>
         async function connectData() {
             try {
                 const response = await fetch('/api/airbyte/token', {
@@ -76,7 +75,7 @@
             }
         }
 
-        document.getElementById('connect-btn').addEventListener('click', connectData);
+        document.getElementById("connect-btn").addEventListener("click", connectData);
     </script>
 
 </body>
