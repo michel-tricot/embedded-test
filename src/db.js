@@ -41,23 +41,6 @@ const db = {
         return newUser;
     },
 
-    updateUser: (email, airbyteWorkspaceId, airbyteDestinationId) => {
-        const users = db.read();
-        const userIndex = users.findIndex(user => user.email === email);
-        
-        if (userIndex === -1) {
-            throw new Error('User not found');
-        }
-
-        users[userIndex] = {
-            ...users[userIndex],
-            airbyte_workspace_id: airbyteWorkspaceId,
-            airbyte_destination_id: airbyteDestinationId
-        };
-        
-        db.write(users);
-        return users[userIndex];
-    }
 };
 
 module.exports = db; 
