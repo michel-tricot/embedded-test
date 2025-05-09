@@ -55,8 +55,8 @@ export async function getAccessToken() {
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                client_id: process.env.CLIENT_ID,
-                client_secret: process.env.CLIENT_SECRET,
+                client_id: process.env.AIRBYTE_CLIENT_ID,
+                client_secret: process.env.AIRBYTE_CLIENT_SECRET,
                 "grant-type": "client_credentials"
             })
         });
@@ -94,7 +94,7 @@ export async function createWorkspace(email) {
             method: 'POST',
             body: JSON.stringify({
                 name: `embedded-workspace_${email.replace(/[^a-zA-Z0-9]/g, '_')}`,
-                organizationId: process.env.ORGANIZATION_ID
+                organizationId: process.env.AIRBYTE_ORGANIZATION_ID
             })
         });
 

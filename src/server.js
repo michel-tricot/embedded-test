@@ -73,10 +73,6 @@ app.post('/api/users', async (req, res) => {
             return res.json(existingUser);
         }
 
-        // Create a new workspace and destination
-        const workspaceId = await api.createWorkspace(email);
-        const destinationId = await api.createDestination(workspaceId);
-
         const newUser = db.addUser(email, workspaceId, destinationId);
         setAuthCookie(res, email);
         res.status(201).json(newUser);
@@ -114,7 +110,7 @@ app.post('/api/airbyte/token', async (req, res) => {
 
     try {
         const widgetToken = await api.generateWidgetToken(
-            process.env.ORGANIZATION_ID, 
+            process.env.AIRBYTE_ORGANIZATION_ID, 
             req.user.email, 
             allowedOrigin
         );
@@ -129,12 +125,12 @@ app.post('/api/airbyte/token', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
     console.log('Environment variables loaded:');
-    console.log('ORGANIZATION_ID:', process.env.ORGANIZATION_ID);
-    console.log('CLIENT_ID:', process.env.CLIENT_ID ? '***' : 'not set');
-    console.log('CLIENT_SECRET:', process.env.CLIENT_SECRET ? '***' : 'not set');
+    console.log('AIRBYTE_ORGANIZATION_ID:', process.env.AIRBYTE_ORGANIZATION_ID);
+    console.log('AIRBYTE_CLIENT_ID:', process.env.AIRBYTE_CLIENT_ID ? '***' : 'not set');
+    console.log('AIRBYTE_CLIENT_SECRET:', process.env.AIRBYTE_CLIENT_SECRET ? '***' : 'not set');
     console.log('AWS_ACCESS_KEY:', process.env.AWS_ACCESS_KEY ? '***' : 'not set');
     console.log('AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY ? '***' : 'not set');
     console.log('S3_BUCKET:', process.env.S3_BUCKET);
     console.log('S3_BUCKET_REGION:', process.env.S3_BUCKET_REGION);
     console.log('S3_BUCKET_PREFIX:', process.env.S3_BUCKET_PREFIX);
-}); 
+});

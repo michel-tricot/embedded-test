@@ -25,7 +25,7 @@ const db = {
         return users.find(user => user.email === email);
     },
 
-    addUser: (email, airbyteWorkspaceId, airbyteDestinationId) => {
+    addUser: (email) => {
         const users = db.read();
         
         // Check if user already exists
@@ -34,9 +34,7 @@ const db = {
         }
 
         const newUser = { 
-            email,
-            airbyte_workspace_id: airbyteWorkspaceId,
-            airbyte_destination_id: airbyteDestinationId
+            email
         };
         users.push(newUser);
         db.write(users);

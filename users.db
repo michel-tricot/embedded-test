@@ -83,5 +83,20 @@
     "email": "commute@test.com",
     "airbyte_workspace_id": "181b0aaa-184f-4244-b12c-f003b2312f7d",
     "airbyte_destination_id": "0fd37776-8a88-4c55-bd14-4e938a6c79e0"
+  },
+  {
+    "email": "alexg@airbyte.io",
+    "airbyte_workspace_id": "0e83a9d7-502b-44a0-a173-a19b578598fa",
+    "airbyte_destination_id": "0628f113-9185-4a64-8b16-3e32c8c9e883"
+  },
+  {
+    "email": "michelt@gmail.com",
+    "airbyte_workspace_id": "e352742b-042c-45fb-a817-cf2e190cc159",
+    "airbyte_destination_id": "79999a4b-2b1a-471c-ace5-e5772109be31"
+  },
+  {
+    "email": "bozo@gmail.com",
+    "airbyte_workspace_id": "38b0078c-2056-4ec0-afcd-3a50d9688d5c",
+    "airbyte_destination_id": "00b77249-9761-4c84-a02c-f5047d698f78"
   }
 ]
