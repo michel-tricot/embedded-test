@@ -93,8 +93,7 @@ app.get('/api/users/me', (req, res) => {
     res.json(req.user);
 });
 
-// Endpoint to create a widget token
-// This endpoint should test that the user is actually authenticated.
+// Endpoint to generate a widget token that will be passed to the widget in the web app
 app.post('/api/airbyte/token', async (req, res) => {
     // Check if user is authenticated
     if (!req.user) {
@@ -102,11 +101,7 @@ app.post('/api/airbyte/token', async (req, res) => {
     }
 
     try {
-        const widgetToken = await api.generateWidgetToken(
-            process.env.AIRBYTE_ORGANIZATION_ID, 
-            req.user.email, 
-            process.env.ALLOWED_ORIGIN
-        );
+        const widgetToken = await api.generateWidgetToken(req.user.email);
         res.json({ token: widgetToken });
     } catch (error) {
         console.error('Error generating widget token:', error);
@@ -118,6 +113,7 @@ app.post('/api/airbyte/token', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
     console.log('Environment variables loaded:');
+    console.log('ALLOWED_ORIGIN:', process.env.ALLOWED_ORIGIN);
     console.log('AIRBYTE_ORGANIZATION_ID:', process.env.AIRBYTE_ORGANIZATION_ID);
     console.log('AIRBYTE_CLIENT_ID:', process.env.AIRBYTE_CLIENT_ID ? '***' : 'not set');
     console.log('AIRBYTE_CLIENT_SECRET:', process.env.AIRBYTE_CLIENT_SECRET ? '***' : 'not set');

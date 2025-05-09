@@ -34,12 +34,10 @@ async function getAccessToken() {
 
 /**
  * Generates a widget token for the Airbyte API
- * @param {string} organizationId - The ID of the organization
  * @param {string} externalUserId - The ID of the external user
- * @param {string} allowedOrigin - The origin of the allowed request
  * @returns {Promise<string>} The widget token
  */
-export async function generateWidgetToken(organizationId, externalUserId, allowedOrigin) {
+export async function generateWidgetToken(externalUserId) {
     try {
         const accessToken = await getAccessToken();
 
@@ -51,9 +49,9 @@ export async function generateWidgetToken(organizationId, externalUserId, allowe
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                organizationId: organizationId,
+                organizationId: process.env.AIRBYTE_ORGANIZATION_ID,
                 externalUserId: externalUserId,
-                allowedOrigin: allowedOrigin,
+                allowedOrigin: process.env.ALLOWED_ORIGIN,
             })
         });
 
