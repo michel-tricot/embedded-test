@@ -1,102 +1,65 @@
 [
   {
-    "email": "test@toto.com",
-    "airbyte_workspace_id": "c97d1e00-07b9-4aa1-aa20-5818f5970d70",
-    "airbyte_destination_id": "fd5875a9-a5c7-40d2-868f-78a705ce2e91"
+    "email": "test@toto.com"
   },
   {
-    "email": "hhh.hhh.com",
-    "airbyte_workspace_id": "3f448c2f-cd0f-438d-9af1-a31b61c4a6cb",
-    "airbyte_destination_id": "9dcbe061-48c9-492e-9680-81832cc8066b"
+    "email": "hhh.hhh.com"
   },
   {
-    "email": "test@test.com",
-    "airbyte_workspace_id": "76746dc4-355b-465f-8a45-57daaf129eb1",
-    "airbyte_destination_id": "8c3e33df-03fe-494c-b921-43b109e95810"
+    "email": "test@test.com"
   },
   {
-    "email": "abc@home.com",
-    "airbyte_workspace_id": "49e4a91d-a858-45c1-8fca-7303712541e7",
-    "airbyte_destination_id": "04cdb1f4-a41c-4464-9380-d2f1b8dc9b5f"
+    "email": "abc@home.com"
   },
   {
-    "email": "quinton@airbyte.io",
-    "airbyte_workspace_id": "adb44796-29f1-49fd-9611-d8513463c730",
-    "airbyte_destination_id": "613f4d80-52aa-4bb7-995b-076fcd15d281"
+    "email": "quinton@airbyte.io"
   },
   {
-    "email": "michel@airbyte.io",
-    "airbyte_workspace_id": "5e25e55e-35be-499a-8b29-40b47d337817",
-    "airbyte_destination_id": "4ba3cc7c-be97-4587-aae5-f5eec75b18ba"
+    "email": "michel@airbyte.io"
   },
   {
-    "email": "michel.tricot@gmail.com",
-    "airbyte_workspace_id": "4b0b5b02-e074-405b-89e5-230bf705154a",
-    "airbyte_destination_id": "db06a8e7-58cf-4628-841f-5a751a7f5154"
+    "email": "michel.tricot@gmail.com"
   },
   {
-    "email": "ggg@toto.com",
-    "airbyte_workspace_id": "f1838e17-f4ed-4b69-a53f-4c9139b0af93",
-    "airbyte_destination_id": "a34e833b-f83c-4fa9-a5de-be56627bf41e"
+    "email": "ggg@toto.com"
   },
   {
-    "email": "abcdef@toto.com",
-    "airbyte_workspace_id": "0daf458e-a8f7-491d-9f60-6341353d163b",
-    "airbyte_destination_id": "66ba6906-a9a7-4de8-b659-a76736ec81d9"
+    "email": "abcdef@toto.com"
   },
   {
-    "email": "qewrasdf@444.fco",
-    "airbyte_workspace_id": "c9e87f3f-3b7b-4c49-bd76-ef40187c906d",
-    "airbyte_destination_id": "a13d82f3-de3e-4555-ad8f-ed02440b2d84"
+    "email": "qewrasdf@444.fco"
   },
   {
-    "email": "appl@abc.com",
-    "airbyte_workspace_id": "2d2001dc-048d-4924-93b0-0793b35439cb",
-    "airbyte_destination_id": "fc002d4b-c386-4bc8-a850-ba84a3606660"
+    "email": "appl@abc.com"
   },
   {
-    "email": "ggg@test.com",
-    "airbyte_workspace_id": "ba254850-b169-459b-a2ff-2befed7127a3",
-    "airbyte_destination_id": "5ed649a0-a701-48d0-9c2a-d54a9b61a0e1"
+    "email": "ggg@test.com"
   },
   {
-    "email": "aaa@toto.com",
-    "airbyte_workspace_id": "7f0cc22b-0b64-41eb-b42a-46d7f4e75ee3",
-    "airbyte_destination_id": "dcd0b9b9-bb15-4a10-a90a-2b62f4e5c9d5"
+    "email": "aaa@toto.com"
   },
   {
-    "email": "alex@toto.com",
-    "airbyte_workspace_id": "7b9f8eaa-3d19-461c-9af4-ddf8f22f281b",
-    "airbyte_destination_id": "5145f2f5-fc70-4714-9365-aac4c6095342"
+    "email": "alex@toto.com"
   },
   {
-    "email": "michel@toto.com",
-    "airbyte_workspace_id": "c0b053ad-0c5a-4fd4-80e4-6cc2b0955487",
-    "airbyte_destination_id": "a95238fd-88d5-499e-aa7c-56d48455f325"
+    "email": "michel@toto.com"
   },
   {
-    "email": "123@toto.com",
-    "airbyte_workspace_id": "422251c1-cc22-4001-a8c0-21bef20f52ea",
-    "airbyte_destination_id": "00f0b482-497f-4707-b7da-a232ede563dd"
+    "email": "123@toto.com"
   },
   {
-    "email": "commute@test.com",
-    "airbyte_workspace_id": "181b0aaa-184f-4244-b12c-f003b2312f7d",
-    "airbyte_destination_id": "0fd37776-8a88-4c55-bd14-4e938a6c79e0"
+    "email": "commute@test.com"
   },
   {
-    "email": "alexg@airbyte.io",
-    "airbyte_workspace_id": "0e83a9d7-502b-44a0-a173-a19b578598fa",
-    "airbyte_destination_id": "0628f113-9185-4a64-8b16-3e32c8c9e883"
+    "email": "alexg@airbyte.io"
   },
   {
-    "email": "michelt@gmail.com",
-    "airbyte_workspace_id": "e352742b-042c-45fb-a817-cf2e190cc159",
-    "airbyte_destination_id": "79999a4b-2b1a-471c-ace5-e5772109be31"
+    "email": "michelt@gmail.com"
   },
   {
-    "email": "bozo@gmail.com",
-    "airbyte_workspace_id": "38b0078c-2056-4ec0-afcd-3a50d9688d5c",
-    "airbyte_destination_id": "00b77249-9761-4c84-a02c-f5047d698f78"
+    "email": "bozo@gmail.com"
+  },
+  {
+    "email": "marie@tricot.com"
   }
 ]
