@@ -49,8 +49,8 @@ export async function generateWidgetToken(externalUserId) {
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                organizationId: process.env.AIRBYTE_ORGANIZATION_ID,
                 externalUserId: externalUserId,
+                organizationId: process.env.AIRBYTE_ORGANIZATION_ID,
                 allowedOrigin: process.env.ALLOWED_ORIGIN,
             })
         });
