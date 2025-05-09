@@ -115,7 +115,7 @@ app.post('/api/airbyte/token', async (req, res) => {
     try {
         const widgetToken = await api.generateWidgetToken(
             process.env.ORGANIZATION_ID, 
-            req.user.airbyte_workspace_id, 
+            req.user.email, 
             allowedOrigin
         );
         res.json({ token: widgetToken });

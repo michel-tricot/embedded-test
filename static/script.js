@@ -19,7 +19,7 @@ async function updateUI() {
 
         // Fetch and display workspace ID
         try {
-            const response = await fetch(`/api/users/${encodeURIComponent(currentUser)}`);
+            const response = await fetch('/api/users/me');
             if (response.ok) {
                 const userData = await response.json();
                 workspaceId.textContent = userData.airbyte_workspace_id;

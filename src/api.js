@@ -142,15 +142,18 @@ export async function createDestination(workspaceId) {
 
 /**
  * Generates a widget token for the Airbyte API
- * @param {string} workspaceId - The ID of the workspace
+ * @param {string} organizationId - The ID of the organization
+ * @param {string} externalUserId - The ID of the external user
+ * @param {string} allowedOrigin - The origin of the allowed request
  * @returns {Promise<string>} The widget token
  */
-export async function generateWidgetToken(workspaceId, allowedOrigin) {
+export async function generateWidgetToken(organizationId, externalUserId, allowedOrigin) {
     try {
         const response = await makeAuthenticatedRequest('https://api.airbyte.com/v1/embedded/widget_token', {
             method: 'POST',
             body: JSON.stringify({
-                workspaceId: workspaceId,
+                organizationId: organizationId,
+                externalUserId: externalUserId,
                 allowedOrigin: allowedOrigin,
             })
         });

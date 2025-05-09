@@ -73,5 +73,15 @@
     "email": "michel@toto.com",
     "airbyte_workspace_id": "c0b053ad-0c5a-4fd4-80e4-6cc2b0955487",
     "airbyte_destination_id": "a95238fd-88d5-499e-aa7c-56d48455f325"
+  },
+  {
+    "email": "123@toto.com",
+    "airbyte_workspace_id": "422251c1-cc22-4001-a8c0-21bef20f52ea",
+    "airbyte_destination_id": "00f0b482-497f-4707-b7da-a232ede563dd"
+  },
+  {
+    "email": "commute@test.com",
+    "airbyte_workspace_id": "181b0aaa-184f-4244-b12c-f003b2312f7d",
+    "airbyte_destination_id": "0fd37776-8a88-4c55-bd14-4e938a6c79e0"
   }
 ]
