@@ -96,13 +96,6 @@ app.get('/api/users/me', (req, res) => {
 // Endpoint to create a widget token
 // This endpoint should test that the user is actually authenticated.
 app.post('/api/airbyte/token', async (req, res) => {
-    const { allowedOrigin } = req.body;
-    
-    // Validate input
-    if (!allowedOrigin) {
-        return res.status(400).json({ error: 'allowedOrigin is required' });
-    }
-
     // Check if user is authenticated
     if (!req.user) {
         return res.status(401).json({ error: 'User not authenticated' });
@@ -112,7 +105,7 @@ app.post('/api/airbyte/token', async (req, res) => {
         const widgetToken = await api.generateWidgetToken(
             process.env.AIRBYTE_ORGANIZATION_ID, 
             req.user.email, 
-            allowedOrigin
+            process.env.ALLOWED_ORIGIN
         );
         res.json({ token: widgetToken });
     } catch (error) {

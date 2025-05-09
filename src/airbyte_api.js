@@ -57,6 +57,11 @@ export async function generateWidgetToken(organizationId, externalUserId, allowe
             })
         });
 
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Failed to get widget token: ${errorData.message || response.statusText}`);
+        }
+
         const data = await response.json();
         return data.token;
     } catch (error) {
