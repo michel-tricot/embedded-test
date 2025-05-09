@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const db = require('./db');
-const api = require('./api');
+const api = require('./airbyte_api');
 const app = express();
 const port = 3000;
 const cookieParser = require('cookie-parser');
@@ -73,7 +73,7 @@ app.post('/api/users', async (req, res) => {
             return res.json(existingUser);
         }
 
-        const newUser = db.addUser(email, workspaceId, destinationId);
+        const newUser = db.addUser(email);
         setAuthCookie(res, email);
         res.status(201).json(newUser);
     } catch (error) {

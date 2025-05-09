@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
  * Generates a new access token from the Airbyte API
  * @returns {Promise<string>} The access token
  */
-export async function getAccessToken() {
+async function getAccessToken() {
     try {
         const response = await fetch('https://api.airbyte.com/v1/applications/token', {
             method: 'POST',
@@ -24,7 +24,8 @@ export async function getAccessToken() {
             throw new Error(`Failed to get access token: ${errorData.message || response.statusText}`);
         }
 
-        return await response.json().access_token;
+        const data = await response.json();
+        return data.access_token;
     } catch (error) {
         console.error('Error getting access token:', error);
         throw error;
@@ -56,7 +57,8 @@ export async function generateWidgetToken(organizationId, externalUserId, allowe
             })
         });
 
-        const data = await response.json().token;
+        const data = await response.json();
+        return data.token;
     } catch (error) {
         console.error('Error generating widget token:', error);
         throw error;
