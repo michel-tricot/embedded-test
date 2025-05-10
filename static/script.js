@@ -4,6 +4,17 @@ function showMessage(text, isError = false) {
     const messageDiv = document.getElementById('message');
     messageDiv.textContent = text;
     messageDiv.className = isError ? 'error' : 'success';
+    messageDiv.style.display = 'block';
+    
+    // Clear any existing timeout
+    if (messageDiv.timeoutId) {
+        clearTimeout(messageDiv.timeoutId);
+    }
+    
+    // Set timeout to hide message after 5 seconds
+    messageDiv.timeoutId = setTimeout(() => {
+        messageDiv.style.display = 'none';
+    }, 5000);
 }
 
 async function updateUI() {
