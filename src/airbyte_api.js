@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 /**
  * Generates a new access token from the Airbyte API
  * @returns {Promise<string>} The access token
