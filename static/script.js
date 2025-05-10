@@ -21,13 +21,16 @@ async function updateUI() {
     const userInfo = document.getElementById('userInfo');
     const loggedInEmail = document.getElementById('loggedInEmail');
     const emailInput = document.getElementById('email');
+    const loginForm = document.getElementById('loginForm');
     
     if (currentUser) {
         userInfo.classList.add('visible');
         loggedInEmail.textContent = currentUser;
         emailInput.value = '';
+        loginForm.style.display = 'none';
     } else {
         userInfo.classList.remove('visible');
+        loginForm.style.display = 'block';
     }
 }
 
