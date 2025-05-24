@@ -25,7 +25,7 @@ curl -X POST 'https://api.airbyte.com/v1/config_templates/connections' \
         \"access_key_id\": \"${AWS_ACCESS_KEY}\",
         \"secret_access_key\": \"${AWS_SECRET_ACCESS_KEY}\",
         \"s3_bucket_name\": \"${S3_BUCKET}\",
-        \"s3_bucket_path\": \"${S3_BUCKET_PATH}\",
+        \"s3_bucket_path\": \"${S3_BUCKET_PREFIX}\",
         \"s3_bucket_region\": \"${S3_BUCKET_REGION}\",
         \"format\": {
             \"format_type\": \"CSV\",
