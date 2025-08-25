@@ -1,19 +1,39 @@
 let currentUser = null;
 
-function showMessage(text, isError = false) {
-    const messageDiv = document.getElementById('message');
-    messageDiv.textContent = text;
-    messageDiv.className = isError ? 'error' : 'success';
-    messageDiv.style.display = 'block';
+function setTheme(theme) {
+    const body = document.body;
+    const themeToggle = document.getElementById('theme-toggle');
+    
+    body.setAttribute('data-theme', theme);
+    themeToggle.textContent = theme === 'light' ? '☀️' : '🌙';
+    localStorage.setItem('theme', theme);
+}
+
+function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+}
+
+function showToast(text, isError = false) {
+    const toastDiv = document.getElementById('toast');
+    toastDiv.textContent = text;
+    toastDiv.className = isError ? 'error' : 'success';
+    toastDiv.style.display = 'block';
     
     // Clear any existing timeout
-    if (messageDiv.timeoutId) {
-        clearTimeout(messageDiv.timeoutId);
+    if (toastDiv.timeoutId) {
+        clearTimeout(toastDiv.timeoutId);
     }
     
-    // Set timeout to hide message after 5 seconds
-    messageDiv.timeoutId = setTimeout(() => {
-        messageDiv.style.display = 'none';
+    // Set timeout to hide toast after 5 seconds
+    toastDiv.timeoutId = setTimeout(() => {
+        toastDiv.style.display = 'none';
     }, 5000);
 }
 
@@ -22,15 +42,18 @@ async function updateUI() {
     const loggedInEmail = document.getElementById('loggedInEmail');
     const emailInput = document.getElementById('email');
     const loginForm = document.getElementById('loginForm');
+    const airbyteHint = document.getElementById('airbyteHint');
     
     if (currentUser) {
         userInfo.classList.add('visible');
         loggedInEmail.textContent = currentUser;
         emailInput.value = '';
         loginForm.style.display = 'none';
+        airbyteHint.style.display = 'block';
     } else {
         userInfo.classList.remove('visible');
         loginForm.style.display = 'block';
+        airbyteHint.style.display = 'none';
     }
 }
 
@@ -38,19 +61,19 @@ async function handleUserAction() {
     const email = document.getElementById('email').value;
     const spinner = document.getElementById('spinner');
     const submitButton = document.querySelector('.action-btn');
-    const messageDiv = document.getElementById('message');
+    const toastDiv = document.getElementById('toast');
     
     if (!email) {
-        showMessage('Please enter an email address', true);
+        showToast('Please enter an email address', true);
         return;
     }
 
     try {
-        // Show spinner and disable button, hide message
+        // Show spinner and disable button, hide toast
         spinner.classList.add('visible');
         submitButton.disabled = true;
-        messageDiv.textContent = '';
-        messageDiv.className = '';
+        toastDiv.textContent = '';
+        toastDiv.className = '';
 
         const response = await fetch('/api/users', {
             method: 'POST',
@@ -65,12 +88,12 @@ async function handleUserAction() {
         if (response.ok) {
             currentUser = email;
             updateUI();
-            showMessage(response.status === 201 ? 'User created and logged in successfully!' : 'Login successful!');
+            showToast(response.status === 201 ? 'User created and logged in successfully!' : 'Login successful!');
         } else {
-            showMessage(data.error || 'Failed to process request', true);
+            showToast(data.error || 'Failed to process request', true);
         }
     } catch (error) {
-        showMessage('An error occurred', true);
+        showToast('An error occurred', true);
     } finally {
         // Hide spinner and enable button
         spinner.classList.remove('visible');
@@ -83,9 +106,9 @@ async function logout() {
         await fetch('/api/logout', { method: 'POST' });
         currentUser = null;
         updateUI();
-        showMessage('Logged out successfully');
+        showToast('Logged out successfully');
     } catch (error) {
         console.error('Error during logout:', error);
-        showMessage('Error during logout', true);
+        showToast('Error during logout', true);
     }
 } 

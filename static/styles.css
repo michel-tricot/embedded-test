@@ -1,17 +1,35 @@
 :root {
+    --border-radius: 8px;
+    --spacing: 1rem;
+    --transition: all 0.2s ease;
+}
+
+[data-theme="light"] {
+    --bg-primary: #f0f2f5;
+    --bg-secondary: #ffffff;
+    --text-primary: #495057;
+    --text-secondary: #6c757d;
+    --input-border: #ced4da;
+    --accent-primary: #28a745;
+    --accent-primary-hover: #218838;
+    --accent-secondary: #007bff;
+    --accent-secondary-hover: #0056b3;
+    --accent-danger: #dc3545;
+    --accent-danger-hover: #c82333;
+}
+
+[data-theme="dark"] {
     --bg-primary: #1a1a1a;
     --bg-secondary: #2d2d2d;
     --text-primary: #ffffff;
     --text-secondary: #b3b3b3;
+    --input-border: #404040;
     --accent-primary: #2d5a27;
     --accent-primary-hover: #1e3d1a;
     --accent-secondary: #1e4b6e;
     --accent-secondary-hover: #153a56;
     --accent-danger: #8b2a2a;
     --accent-danger-hover: #6b2020;
-    --border-radius: 8px;
-    --spacing: 1rem;
-    --transition: all 0.2s ease;
 }
 
 body {
@@ -56,7 +74,7 @@ label {
 input {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #404040;
+    border: 1px solid var(--input-border);
     border-radius: var(--border-radius);
     box-sizing: border-box;
     margin-bottom: 1rem;
@@ -134,7 +152,7 @@ input:focus {
     transform: translateY(-1px);
 }
 
-#message {
+#toast {
     position: fixed;
     bottom: 2rem;
     left: 50%;
@@ -148,6 +166,7 @@ input:focus {
     max-width: 90%;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
+    display: none;
 }
 
 .success {
@@ -194,4 +213,29 @@ input:focus {
 
 .spinner.visible {
     display: block;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--input-border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    transition: var(--transition);
+    z-index: 1001;
+}
+
+.theme-toggle:hover {
+    background-color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    transform: scale(1.1);
 } 
