@@ -1,0 +1,76 @@
+class ApiClient {
+  constructor(baseURL = '/api') {
+    this.baseURL = baseURL;
+  }
+
+  async request(endpoint, options = {}) {
+    const url = `${this.baseURL}${endpoint}`;
+    
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      ...options,
+    };
+
+    if (config.body && typeof config.body === 'object') {
+      config.body = JSON.stringify(config.body);
+    }
+
+    try {
+      const response = await fetch(url, config);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || `HTTP error! status: ${response.status}`);
+      }
+
+      return { data, status: response.status };
+    } catch (error) {
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        throw new Error('Network error - please check your connection');
+      }
+      throw error;
+    }
+  }
+
+  // Authentication endpoints
+  async login(password) {
+    return this.request('/login', {
+      method: 'POST',
+      body: { password },
+    });
+  }
+
+  async logout() {
+    return this.request('/logout', {
+      method: 'POST',
+    });
+  }
+
+  // User endpoints
+  async createOrLoginUser(email) {
+    return this.request('/users', {
+      method: 'POST',
+      body: { email },
+    });
+  }
+
+  async getCurrentUser() {
+    return this.request('/users/me', {
+      method: 'GET',
+    });
+  }
+
+  // Airbyte endpoints
+  async getAirbyteToken() {
+    return this.request('/airbyte/token', {
+      method: 'POST',
+    });
+  }
+}
+
+// Create and export a singleton instance
+const apiClient = new ApiClient();
+export default apiClient;

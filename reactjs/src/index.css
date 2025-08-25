@@ -1,0 +1,286 @@
+:root {
+    --border-radius: 8px;
+    --spacing: 1rem;
+    --transition: all 0.2s ease;
+}
+
+[data-theme="light"] {
+    --bg-primary: #f0f2f5;
+    --bg-secondary: #ffffff;
+    --text-primary: #495057;
+    --text-secondary: #6c757d;
+    --input-border: #ced4da;
+    --accent-primary: #28a745;
+    --accent-primary-hover: #218838;
+    --accent-secondary: #007bff;
+    --accent-secondary-hover: #0056b3;
+    --accent-danger: #dc3545;
+    --accent-danger-hover: #c82333;
+}
+
+[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --input-border: #404040;
+    --accent-primary: #2d5a27;
+    --accent-primary-hover: #1e3d1a;
+    --accent-secondary: #1e4b6e;
+    --accent-secondary-hover: #153a56;
+    --accent-danger: #8b2a2a;
+    --accent-danger-hover: #6b2020;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.container {
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: var(--spacing);
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 1rem auto;
+    max-width: 120px;
+    height: auto;
+}
+
+.logo.hide-when-logged-in {
+    display: none;
+}
+
+h1 {
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius);
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.action-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--accent-primary);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.action-btn:hover {
+    background-color: var(--accent-primary-hover);
+    transform: translateY(-1px);
+}
+
+.action-btn:disabled {
+    background-color: #404040;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.logout-btn {
+    width: 100%;
+    background-color: var(--accent-danger);
+    color: white;
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.logout-btn:hover {
+    background-color: var(--accent-danger-hover);
+    transform: translateY(-1px);
+}
+
+.connect-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--accent-secondary);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: var(--transition);
+    margin-bottom: 0.5rem;
+}
+
+.connect-btn:hover {
+    background-color: var(--accent-secondary-hover);
+    transform: translateY(-1px);
+}
+
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 500;
+    min-width: 200px;
+    max-width: 90%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none;
+}
+
+.toast.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #81c784;
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    display: block;
+}
+
+.toast.error {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #e57373;
+    border: 1px solid rgba(244, 67, 54, 0.2);
+    display: block;
+}
+
+.user-info {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: rgba(33, 150, 243, 0.1);
+    border-radius: var(--border-radius);
+    display: none;
+    font-size: 0.9rem;
+    border: 1px solid rgba(33, 150, 243, 0.2);
+}
+
+.user-info.visible {
+    display: block;
+}
+
+.spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 10px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner.visible {
+    display: block;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--input-border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    transition: var(--transition);
+    z-index: 1001;
+}
+
+.theme-toggle:hover {
+    background-color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    transform: scale(1.1);
+}
+
+.logout-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 4rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--input-border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    transition: var(--transition);
+    z-index: 1001;
+}
+
+.logout-toggle:hover {
+    background-color: var(--accent-danger);
+    border-color: var(--accent-danger);
+    transform: scale(1.1);
+}
+
+.airbyte-hint {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
