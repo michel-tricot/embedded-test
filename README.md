@@ -34,7 +34,7 @@ npm install && npm run dev
 ### 🚀 Option 3: Next.js Production-Ready
 ```bash
 # After setting up server above, in a new terminal:
-cd nextjs-vite  
+cd nextjs  
 npm install && npm run dev
 ```
 **→ Open http://localhost:3002**
@@ -86,7 +86,7 @@ SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 📁 embedded-test/
 ├── 🔧 server/           # Express.js backend + vanilla demo
 ├── ⚛️  react/            # Create React App version  
-├── 🚀 nextjs-vite/      # Next.js production version
+├── 🚀 nextjs/           # Next.js production version
 └── 📖 README.md         # You are here!
 ```
 
@@ -128,7 +128,7 @@ cd react && npm run build
 
 ### Next.js → Vercel (Recommended)
 ```bash
-cd nextjs-vite && npm run build
+cd nextjs && npm run build
 # Auto-deploy with Vercel CLI or GitHub integration
 ```
 
