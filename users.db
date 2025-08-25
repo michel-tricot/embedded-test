@@ -10,5 +10,14 @@
   },
   {
     "email": "michel+3@airbyte.io"
+  },
+  {
+    "email": "teo@test.com"
+  },
+  {
+    "email": "test@toto.com"
+  },
+  {
+    "email": "teso@toto.com"
   }
 ]

@@ -8,9 +8,20 @@
 </head>
 <body>
     <button class="theme-toggle" id="theme-toggle" title="Toggle theme">🌙</button>
+    <button class="logout-toggle" id="logout-toggle" title="Logout" style="display: none;" onclick="logoutFromApp()">🚪</button>
     <div class="container">
+        <img src="octavia-sonar.png" alt="Octavia Sonar" class="logo">
         <h1>Embedded Demo</h1>
-        <form id="loginForm" onsubmit="event.preventDefault(); handleUserAction();">
+        
+        <form id="passwordForm" onsubmit="event.preventDefault(); handlePasswordAuth();">
+            <div class="form-group">
+                <input type="password" id="password" placeholder="Enter access password" required>
+                <button type="submit" class="action-btn">Access Demo</button>
+                <div id="passwordSpinner" class="spinner"></div>
+            </div>
+        </form>
+        
+        <form id="loginForm" onsubmit="event.preventDefault(); handleUserAction();" style="display: none;">
             <div class="form-group">
                 <input type="email" id="email" placeholder="Enter email address" required>
                 <button type="submit" class="action-btn">Login or Create</button>
@@ -30,20 +41,37 @@
     <script src="script.js"></script>
 
     <script>
-        // Check for existing login on page load
+        // Check for existing authentication on page load
         window.onload = async function() {
             initializeTheme();
             document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
             
+            // First check if password is already authenticated
             try {
                 const response = await fetch('/api/users/me');
                 if (response.ok) {
+                    // Password is authenticated, check for user login
+                    isPasswordAuthenticated = true;
                     const userData = await response.json();
                     currentUser = userData.email;
+                    updatePasswordUI();
                     updateUI();
+                } else if (response.status === 401) {
+                    // Check if it's password auth failure or user auth failure
+                    const errorData = await response.json();
+                    if (errorData.error === 'Password required') {
+                        isPasswordAuthenticated = false;
+                        updatePasswordUI();
+                    } else {
+                        // Password authenticated but no user login
+                        isPasswordAuthenticated = true;
+                        updatePasswordUI();
+                    }
                 }
             } catch (error) {
                 console.error('Error checking authentication status:', error);
+                isPasswordAuthenticated = false;
+                updatePasswordUI();
             }
         };
     </script>

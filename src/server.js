@@ -20,10 +20,33 @@ function setAuthCookie(res, email) {
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+// Middleware to parse cookies
 app.use(cookieParser());
 
-// Fake Auth: read user from cookie
-app.use((req, res, next) => {
+// Serve static files from the static directory (no password protection)
+app.use(express.static(path.join(__dirname, '../static')));
+
+// Route for the root path (no password protection)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../static/index.html'));
+});
+
+// Password protection middleware for API routes
+function requirePasswordForAPI(req, res, next) {
+    // Skip password check for login endpoint
+    if (req.path === '/api/login') {
+        return next();
+    }
+
+    // Only apply password protection to API routes
+    if (req.path.startsWith('/api/')) {
+        const isAuthenticated = req.cookies.appPassword === process.env.SONAR_WEBAPP_PASSWORD;
+        if (!isAuthenticated) {
+            return res.status(401).json({ error: 'Password required' });
+        }
+    }
+
+    // Set user if authenticated
     const userEmail = req.cookies.userEmail;
     if (userEmail) {
         try {
@@ -35,15 +58,28 @@ app.use((req, res, next) => {
             console.error('Error reading user from cookie:', error);
         }
     }
+
     next();
-});
+}
 
-// Serve static files from the static directory
-app.use(express.static(path.join(__dirname, '../static')));
+// Apply password protection to API routes
+app.use(requirePasswordForAPI);
 
-// Route for the root path
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../static/index.html'));
+// Endpoint to handle login
+app.post('/api/login', (req, res) => {
+    const { password } = req.body;
+
+    if (password === process.env.SONAR_WEBAPP_PASSWORD) {
+        res.cookie('appPassword', password, {
+            maxAge: 24 * 60 * 60 * 1000, // 24 hours
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict'
+        });
+        res.json({ success: true });
+    } else {
+        res.status(401).json({ error: 'Invalid password' });
+    }
 });
 
 // Endpoint to handle logout
