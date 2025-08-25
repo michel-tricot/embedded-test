@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedded Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button class="theme-toggle" id="theme-toggle" title="Toggle theme">🌙</button>
+    <button class="logout-toggle" id="logout-toggle" title="Logout" style="display: none;" onclick="logoutFromApp()">🚪</button>
+    <div class="container">
+        <img src="octavia-sonar.png" alt="Octavia Sonar" class="logo">
+        <h1>Embedded Demo</h1>
+        
+        <form id="passwordForm" onsubmit="event.preventDefault(); handlePasswordAuth();">
+            <div class="form-group">
+                <input type="password" id="password" placeholder="Enter access password" required>
+                <button type="submit" class="action-btn">Access Demo</button>
+                <div id="passwordSpinner" class="spinner"></div>
+            </div>
+        </form>
+        
+        <form id="loginForm" onsubmit="event.preventDefault(); handleUserAction();" style="display: none;">
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Enter email address" required>
+                <button type="submit" class="action-btn">Login or Create</button>
+                <div id="spinner" class="spinner"></div>
+            </div>
+        </form>
+        
+        <div id="toast"></div>
+        <div id="userInfo" class="user-info">
+            <p>Logged in as: <span id="loggedInEmail"></span></p>
+            <button id="connect-btn">Connect Data</button>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        <p id="airbyteHint" style="display: none; margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); text-align: center;">Click "Connect Data" to open the Airbyte Embedded widget</p>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        // Check for existing authentication on page load
+        window.onload = async function() {
+            initializeTheme();
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            
+            // First check if password is already authenticated
+            try {
+                const response = await fetch('/api/users/me');
+                if (response.ok) {
+                    // Password is authenticated, check for user login
+                    isPasswordAuthenticated = true;
+                    const userData = await response.json();
+                    currentUser = userData.email;
+                    updatePasswordUI();
+                    updateUI();
+                } else if (response.status === 401) {
+                    // Check if it's password auth failure or user auth failure
+                    const errorData = await response.json();
+                    if (errorData.error === 'Password required') {
+                        isPasswordAuthenticated = false;
+                        updatePasswordUI();
+                    } else {
+                        // Password authenticated but no user login
+                        isPasswordAuthenticated = true;
+                        updatePasswordUI();
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking authentication status:', error);
+                isPasswordAuthenticated = false;
+                updatePasswordUI();
+            }
+        };
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@airbyte-embedded/airbyte-embedded-widget"></script>
+    <script>
+
+        // This function is used to connect to the Airbyte API and get a widget token
+        // When token is fetched, it opens the widget
+        // It is called when the user clicks the "Connect Data" button
+        async function connectData() {
+            try {
+                const response = await fetch('/api/airbyte/token', {
+                    method: 'POST',
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch widget token');
+                }
+
+                const { token } = await response.json();
+                
+                const widget = new AirbyteEmbeddedWidget({
+                    token: token
+                });
+                widget.open();
+            } catch (error) {
+                console.error('Error connecting data:', error);
+            }
+        }
+
+        document.getElementById("connect-btn").addEventListener("click", connectData);
+    </script>
+
+</body>
+</html> 
