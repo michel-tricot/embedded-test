@@ -1,0 +1,17 @@
+# Development files
+node_modules
+.env
+.env.local
+*.log
+
+# Database files (SQLite not supported on Vercel)
+*.db
+*.sqlite
+
+# Development tools
+.vscode
+.idea
+
+# OS files
+.DS_Store
+Thumbs.db

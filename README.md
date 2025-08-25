@@ -116,21 +116,42 @@ SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 
 ## 🚀 Deployment Guide
 
-### Vanilla JS → Static Hosting
-- Deploy `server/static/` to Netlify, Vercel, or GitHub Pages
-- Update API URLs to your backend
+### 🌐 Deploy Server to Vercel (Recommended)
+
+**One-click deploy:**
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/michel-tricot/embedded-test&project-name=airbyte-demo&root-directory=server)
+
+**Manual deploy:**
+```bash
+cd server
+npx vercel
+```
+
+**⚠️ Important:** Add environment variables in Vercel dashboard:
+- `SONAR_WEBAPP_PASSWORD=demopassword`
+- `SONAR_ALLOWED_ORIGIN=https://your-vercel-url.vercel.app`
+- Plus your Airbyte credentials
+
+📖 **Full deployment guide:** [`server/DEPLOY.md`](server/DEPLOY.md)
+
+### 📱 Deploy Frontends
 
 ### React → Vercel/Netlify
 ```bash
 cd react && npm run build
-# Deploy ./build folder
+# Set REACT_APP_API_URL to your deployed server
 ```
 
 ### Next.js → Vercel (Recommended)
 ```bash
-cd nextjs && npm run build
-# Auto-deploy with Vercel CLI or GitHub integration
+cd nextjs && npx vercel
+# Update next.config.js proxy to your deployed server
 ```
+
+### Vanilla JS → Any Static Host
+- Deploy `server/static/` folder to Netlify, Vercel, or GitHub Pages
+- Update API URLs to your deployed backend
 
 ## 🔧 Troubleshooting
 

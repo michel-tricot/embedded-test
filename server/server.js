@@ -2,7 +2,8 @@ require('dotenv').config();
 
 const express = require('express');
 const path = require('path');
-const db = require('./db');
+// Use in-memory database for Vercel deployment, SQLite for local development
+const db = process.env.VERCEL ? require('./db-vercel') : require('./db');
 const api = require('./airbyte_api');
 const app = express();
 const port = 3000;
