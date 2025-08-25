@@ -1,101 +1,169 @@
-# Airbyte Embedded Widget Demo
+# 🚀 Airbyte Embedded Widget Demo
 
-This repository contains multiple implementations of the Airbyte Embedded Widget demo application, showcasing different frontend frameworks and architectures.
+**Experience the power of Airbyte's Embedded Widget in action!** 
 
-## Project Structure
+This demo showcases how to integrate Airbyte's data movement capabilities directly into your application using three different frontend approaches: Vanilla JavaScript, React, and Next.js.
 
-```
-embedded-test/
-├── server/           # Backend Node.js server
-├── static/           # Original vanilla JavaScript frontend
-├── react/            # React version (Create React App)
-├── nextjs-vite/      # Next.js version with optimizations
-└── README.md         # This file
-```
+## ⚡ 2-Minute Quick Start
 
-## Quick Start
-
-### 1. Start the Backend Server
-
+### 🔧 Option 1: Fastest Demo (Vanilla JS)
 ```bash
-cd server
+# Clone and start
+git clone https://github.com/michel-tricot/embedded-test.git
+cd embedded-test/server
 npm install
-cp .env.example .env
-# Edit .env with your Airbyte credentials
+
+# Set demo password (required)
+echo "SONAR_WEBAPP_PASSWORD=demopassword" > .env
+echo "SONAR_ALLOWED_ORIGIN=http://localhost:3000" >> .env
+
+# Start demo
 npm run dev
 ```
+**→ Open http://localhost:3000**  
+**→ Password: `demopassword`**
 
-Server runs on `http://localhost:3000`
-
-### 2. Choose Your Frontend
-
-#### Vanilla JavaScript (Original)
-- Files served directly from `server/static/`
-- Access at `http://localhost:3000`
-
-#### React Version
+### 🎯 Option 2: Modern React Experience  
 ```bash
+# After setting up server above, in a new terminal:
 cd react
-npm install
-npm run dev
+npm install && npm run dev
 ```
-Runs on `http://localhost:3001`
+**→ Open http://localhost:3001**
 
-#### Next.js Version
+### 🚀 Option 3: Next.js Production-Ready
 ```bash
-cd nextjs-vite
-npm install
-npm run dev  
+# After setting up server above, in a new terminal:
+cd nextjs-vite  
+npm install && npm run dev
 ```
-Runs on `http://localhost:3002`
+**→ Open http://localhost:3002**
 
-## Features
+## 🎮 Demo Flow
 
-All versions include:
-- **Three-step authentication flow**:
-  1. Demo password protection
-  2. User email authentication  
-  3. Airbyte widget integration
-- **Light/dark theme switching**
-- **Toast notifications**
-- **Responsive design**
-- **Session persistence**
+1. **🔐 Enter Demo Password** - Protects the demo from public access
+2. **👤 Create User Account** - Simple email-based authentication  
+3. **🔗 Connect Your Data** - Launch the Airbyte Embedded Widget
 
-## Prerequisites
+![Demo Preview](https://via.placeholder.com/600x400?text=Demo+Preview)
 
-- Node.js 16+ 
-- An Airbyte account with Embedded feature enabled
-- Contact michel@airbyte.io and teo@airbyte.io for access
+## 🏗️ What You Get
 
-## Environment Configuration
+| **Feature** | **Vanilla JS** | **React** | **Next.js** |
+|-------------|----------------|-----------|-------------|
+| 📦 Setup Time | 30 seconds | 1 minute | 1 minute |
+| 🎨 Modern UI | ✅ | ✅ | ✅ |
+| 🌙 Dark/Light Theme | ✅ | ✅ | ✅ |
+| 📱 Mobile Friendly | ✅ | ✅ | ✅ |
+| ⚡ Performance | Fast | Fast | Fastest |
+| 🔍 SEO Ready | Basic | No | Yes |
+| 📈 Production Ready | Good | Better | Best |
 
-Required in `server/.env`:
+## 🎯 For Airbyte Users
+
+### Get Your Credentials
+1. **Contact Airbyte**: Reach out to [michel@airbyte.io](mailto:michel@airbyte.io) or [teo@airbyte.io](mailto:teo@airbyte.io) for Embedded access
+2. **Get Your Keys**: You'll receive your organization ID, client ID, and client secret
+3. **Update Config**: Add them to your `.env` file:
 
 ```bash
+# server/.env
 SONAR_WEBAPP_PASSWORD=your_demo_password
 SONAR_ALLOWED_ORIGIN=http://localhost:3000
 SONAR_AIRBYTE_ORGANIZATION_ID=your_organization_id
-SONAR_AIRBYTE_CLIENT_ID=your_client_id  
+SONAR_AIRBYTE_CLIENT_ID=your_client_id
 SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 ```
 
-## Version Comparison
+## 🛠️ Technical Details
 
-| Feature | Vanilla JS | React | Next.js |
-|---------|------------|--------|---------|
-| Bundle Size | Smallest | Medium | Optimized |
-| Performance | Fast | Fast | Fastest |
-| SEO | Basic | SPA | SSR Ready |
-| Development | Simple | Modern | Advanced |
-| Deployment | Static | SPA | Universal |
+### Prerequisites
+- **Node.js 18+** (uses native fetch API)
+- **Modern browser** (Chrome, Firefox, Safari, Edge)
 
-## API Documentation
+### Project Structure
+```
+📁 embedded-test/
+├── 🔧 server/           # Express.js backend + vanilla demo
+├── ⚛️  react/            # Create React App version  
+├── 🚀 nextjs-vite/      # Next.js production version
+└── 📖 README.md         # You are here!
+```
 
-The backend provides these endpoints:
-- `POST /api/login` - Demo authentication
-- `POST /api/users` - User management
-- `GET /api/users/me` - Current user
-- `POST /api/airbyte/token` - Widget token
-- `POST /api/logout` - Session cleanup
+### Architecture
+- **Backend**: Express.js with SQLite database
+- **Authentication**: Two-layer (demo password + user email)
+- **Widget Integration**: Official Airbyte Embedded Widget
+- **Styling**: CSS custom properties (CSS variables)
+- **State Management**: Local state with persistence
 
-See `server/README.md` for detailed API documentation.
+## 🎨 Customization Examples
+
+### Change Theme Colors
+```css
+/* In any version's CSS file */
+:root {
+  --accent-primary: #your-brand-color;
+  --bg-primary: #your-background;
+}
+```
+
+### Add Your Logo
+```javascript
+// Replace octavia-sonar.png with your logo
+<img src="/your-logo.png" alt="Your Brand" className="logo" />
+```
+
+## 🚀 Deployment Guide
+
+### Vanilla JS → Static Hosting
+- Deploy `server/static/` to Netlify, Vercel, or GitHub Pages
+- Update API URLs to your backend
+
+### React → Vercel/Netlify
+```bash
+cd react && npm run build
+# Deploy ./build folder
+```
+
+### Next.js → Vercel (Recommended)
+```bash
+cd nextjs-vite && npm run build
+# Auto-deploy with Vercel CLI or GitHub integration
+```
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**Q: Widget won't open**  
+A: Check browser console. Ensure Airbyte script loads and your token is valid.
+
+**Q: "Password required" error**  
+A: Make sure `SONAR_WEBAPP_PASSWORD` is set in `server/.env`
+
+**Q: CORS errors**  
+A: Update `SONAR_ALLOWED_ORIGIN` to match your frontend URL
+
+**Q: Database errors**  
+A: Delete `users.db` file to reset. It will be recreated automatically.
+
+## 🤝 Contributing
+
+Found a bug? Want to add a feature? PRs welcome!
+
+1. Fork the repo
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📞 Support
+
+- **Technical Issues**: Open a GitHub issue
+- **Airbyte Embedded Access**: Contact [michel@airbyte.io](mailto:michel@airbyte.io)
+- **General Questions**: Check the [Airbyte Documentation](https://docs.airbyte.com)
+
+---
+
+**🎉 Happy data moving!** Built with ❤️ by the Airbyte team.
