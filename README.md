@@ -26,7 +26,7 @@ npm run dev
 ### 🎯 Option 2: Modern React Experience  
 ```bash
 # After setting up server above, in a new terminal:
-cd react
+cd reactjs
 npm install && npm run dev
 ```
 **→ Open http://localhost:3001**
@@ -85,7 +85,7 @@ SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 ```
 📁 embedded-test/
 ├── 🔧 server/           # Express.js backend + vanilla demo
-├── ⚛️  react/            # Create React App version  
+├── ⚛️  reactjs/          # Create React App version  
 ├── 🚀 nextjs/           # Next.js production version
 └── 📖 README.md         # You are here!
 ```
@@ -116,42 +116,57 @@ SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 
 ## 🚀 Deployment Guide
 
-### 🌐 Deploy Server to Vercel (Recommended)
+### 🌐 Complete Vercel Deployment (Recommended)
 
-**One-click deploy:**
+Deploy both server and React app to Vercel with one-click buttons:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/michel-tricot/embedded-test&project-name=airbyte-demo&root-directory=server)
+#### 1️⃣ Deploy Server First
+[![Deploy Server](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/michel-tricot/embedded-test&project-name=airbyte-demo-server&root-directory=server)
 
-**Manual deploy:**
+**Manual server deploy:**
 ```bash
-cd server
-npx vercel
+cd server && npx vercel
 ```
 
-**⚠️ Important:** Add environment variables in Vercel dashboard:
-- `SONAR_WEBAPP_PASSWORD=demopassword`
-- `SONAR_ALLOWED_ORIGIN=https://your-vercel-url.vercel.app`
-- Plus your Airbyte credentials
+#### 2️⃣ Deploy React App  
+[![Deploy React App](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/michel-tricot/embedded-test&project-name=airbyte-demo-react&root-directory=reactjs)
 
-📖 **Full deployment guide:** [`server/DEPLOY.md`](server/DEPLOY.md)
-
-### 📱 Deploy Frontends
-
-### React → Vercel/Netlify
+**Manual React deploy:**
 ```bash
-cd react && npm run build
-# Set REACT_APP_API_URL to your deployed server
+cd reactjs && npx vercel
 ```
 
-### Next.js → Vercel (Recommended)
+### ⚙️ Environment Configuration
+
+#### Server Environment Variables (in Vercel dashboard):
+```bash
+SONAR_WEBAPP_PASSWORD=demopassword
+SONAR_ALLOWED_ORIGIN=https://your-react-app.vercel.app
+SONAR_AIRBYTE_ORGANIZATION_ID=your_org_id
+SONAR_AIRBYTE_CLIENT_ID=your_client_id
+SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
+```
+
+#### React Environment Variables (in Vercel dashboard):
+```bash
+REACT_APP_API_URL=https://your-server-app.vercel.app/api
+```
+
+### 📚 Detailed Guides
+- 🔧 **Server deployment:** [`server/DEPLOY.md`](server/DEPLOY.md)
+- ⚛️ **React deployment:** [`reactjs/DEPLOY.md`](reactjs/DEPLOY.md)
+
+### 🎯 Alternative Deployments
+
+#### Next.js → Vercel
 ```bash
 cd nextjs && npx vercel
-# Update next.config.js proxy to your deployed server
+# Set API_URL in next.config.js to your deployed server
 ```
 
-### Vanilla JS → Any Static Host
-- Deploy `server/static/` folder to Netlify, Vercel, or GitHub Pages
-- Update API URLs to your deployed backend
+#### Vanilla JS → Static Hosting
+- Deploy `server/static/` to any static host
+- Server must be deployed separately for API functionality
 
 ## 🔧 Troubleshooting
 
