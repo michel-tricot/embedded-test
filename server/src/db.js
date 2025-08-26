@@ -1,6 +1,6 @@
 
-// Use Redis if running on Vercel otherwise store the user list on the local storage
-if (!process.env.VERCEL_URL) {
+// Use Redis if setup, otherwise fallback on local fs
+if (!process.env.REDIS_URL) {
     const fs = require('node:fs').promises;
 
     const db = {

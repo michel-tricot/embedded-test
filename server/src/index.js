@@ -9,7 +9,7 @@ const api = require('./airbyte_api');
 const {setAuthCookie, requirePasswordForAPI} = require("./utils");
 
 const app = express();
-const port = 3001;
+const port = 3000;
 
 console.log(process.env);
 

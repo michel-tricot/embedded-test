@@ -12,7 +12,7 @@ This directory contains the backend server for the Airbyte Embedded Widget demo 
 2. **Configure environment:**
    ```bash
    cp .env.example .env
-   # Edit .env with your Airbyte credentials
+   # Edit .env all the necessary credentials
    ```
 
 3. **Run the server:**
@@ -62,6 +62,9 @@ SONAR_AIRBYTE_ORGANIZATION_ID=your_organization_id
 SONAR_AIRBYTE_CLIENT_ID=your_client_id
 SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 
+# Redis for backend or fallback on local fs if empty.
+REDIS_URL=redis://localhost:6379
+
 # Optional: AWS S3 configuration
 SONAR_AWS_ACCESS_KEY=your_aws_access_key
 SONAR_AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
@@ -74,9 +77,12 @@ SONAR_S3_BUCKET_PREFIX=your_s3_bucket_prefix
 
 ```
 server/
-├── index.js           # Main Express server
-├── db.js              # User database operations
-├── airbyte_api.js     # Airbyte API integration
+├── src/               # Source code
+│   ├── index.js       # Main Express server entry point
+│   ├── server.js      # Express server configuration
+│   ├── db.js          # Database operations (file/Redis based on env)
+│   ├── airbyte_api.js # Airbyte API integration
+│   └── utils.js       # Utility functions
 ├── static/            # Vanilla JS frontend files
 │   ├── index.html     # Main HTML page
 │   ├── script.js      # Frontend JavaScript
@@ -84,35 +90,21 @@ server/
 │   └── octavia-sonar.png
 ├── .env.example       # Environment variables template
 ├── package.json       # Node.js dependencies
+├── vercel.json        # Vercel deployment configuration
 └── README.md         # This file
 ```
 
-## Security Features
-
-- **HTTP-only cookies** for session management
-- **Password protection** for demo access
-- **API route protection** middleware
-- **CORS configuration** with allowed origins
-- **Input validation** and sanitization
-
 ## Database
 
-Uses SQLite with a simple user table for development. The database file (`users.db`) is created automatically when first needed.
+- **File Storage**: Uses file-based storage (`users.db`) with async file operations when `REDIS_URL` is not set
+- **Redis Storage**: Uses Redis for data persistence when `REDIS_URL` environment variable is configured
 
-## Development
-
-- **Auto-reload**: `npm run dev` uses nodemon for automatic server restart
-- **Logging**: Console output shows all environment variables (secrets masked)
-- **Error handling**: Comprehensive error responses for all endpoints
+The database implementation automatically switches based on the presence of the `REDIS_URL` environment variable.
 
 ## Deployment
 
 This server can be deployed to any Node.js hosting service:
-- Heroku
-- Railway
-- DigitalOcean App Platform
-- AWS EC2/ECS
-- Google Cloud Run
+- Vercel
 
 Make sure to:
 1. Set environment variables in your hosting platform
