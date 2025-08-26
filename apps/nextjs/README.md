@@ -53,7 +53,7 @@ This is a Next.js version of the Airbyte Embedded Widget demo application.
 ## Project Structure
 
 ```
-nextjs-vite/
+nextjs/
 ├── public/
 │   └── octavia-sonar.png
 ├── src/
@@ -80,16 +80,8 @@ nextjs-vite/
 The Next.js app communicates with the Node.js backend server through:
 
 - **API Proxy**: Configured in `next.config.js` to proxy `/api/*` to `http://localhost:3000/api/*`
-- **Client-side API calls**: Uses the same API client as the React version
+- **Client-side API calls**: Uses centralized API client in `src/lib/apiClient.js`
 - **SSR compatibility**: All API calls are client-side to maintain compatibility with the existing backend
-
-## Key Differences from React Version
-
-- **Next.js Image component**: Optimized image loading for the logo
-- **SSR considerations**: Proper handling of `window` and `document` objects
-- **API proxy**: Built-in proxy configuration instead of package.json proxy
-- **File-based routing**: Uses Next.js pages structure
-- **Automatic optimizations**: Built-in performance and bundle optimizations
 
 ## Development
 
@@ -112,11 +104,15 @@ This creates an optimized production build with:
 - CSS minification
 - JavaScript minification
 
-## Deployment
+## Testing
 
-The Next.js version can be deployed to:
-- Vercel (recommended for Next.js)
-- Netlify
-- Railway
-- Any Node.js hosting service
-- Static hosting (after `next export` if using static generation)
+```bash
+npm run test
+```
+
+Testing can be added using Jest and React Testing Library (setup not included by default).
+
+## Environment Variables
+
+For production deployment, you may need to set:
+- Next.js automatically handles environment variables with `NEXT_PUBLIC_` prefix for client-side access

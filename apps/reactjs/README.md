@@ -18,8 +18,8 @@ This is a Create React App version of the Airbyte Embedded Widget demo applicati
 
 3. **Make sure the backend server is running:**
    ```bash
-   # From the monorepo root directory
-   npm run dev --filter=@airbyte-demo/server
+   # In the root directory
+   npm run dev
    ```
 
    The backend API server should be running on `http://localhost:3000`
@@ -31,19 +31,24 @@ This is a Create React App version of the Airbyte Embedded Widget demo applicati
   2. User creation/login with email
   3. Airbyte widget integration for data connection
 
-- **React advantages:**
-  - Fast development with Create React App
-  - Hot reloading for instant feedback
-  - Modern React hooks and functional components
+- **React.js advantages:**
+  - Pure React implementation with Create React App
+  - Proxy configuration for API calls
+  - Hot module replacement for fast development
+  - Modern React features with hooks
   - Component-based architecture
-  - Easy testing setup with Jest and React Testing Library
 
 - **Modern React features:**
-  - Functional components with hooks (useState, useEffect)
-  - Custom API client abstraction
+  - Functional components with hooks
+  - Component-based architecture
+  - API client abstraction
   - Theme switching with localStorage persistence
-  - Toast notifications for user feedback
-  - Responsive design
+
+- **Development optimizations:**
+  - Hot reloading and fast refresh
+  - Error overlay for debugging
+  - ESLint integration
+  - Cross-platform development support
 
 ## Project Structure
 
@@ -72,14 +77,14 @@ reactjs/
 
 The React app communicates with the Node.js backend server through:
 
-- **API Client**: Centralized API client in `src/api/client.js`
-- **Backend Proxy**: Configured to use the server running on `http://localhost:3000`
+- **Proxy Configuration**: Configured in `package.json` to proxy `/api/*` to `http://localhost:3000/api/*`
+- **Client-side API calls**: Uses centralized API client in `src/api/client.js`
 - **Cross-platform Port**: Uses cross-env to ensure consistent port (3002) across platforms
 
 ## Development
 
 - **Hot reloading**: Automatic page refresh on file changes
-- **Fast refresh**: Preserves React state during development  
+- **Fast refresh**: Preserves React state during development
 - **Error overlay**: Helpful error messages in development
 - **ESLint integration**: Code quality checking
 - **Cross-platform**: Uses cross-env for consistent environment variables
@@ -103,19 +108,6 @@ npm test
 ```
 
 Runs the test runner in interactive watch mode using Jest and React Testing Library.
-
-## Deployment
-
-The React.js version can be deployed to:
-- Vercel
-- Netlify  
-- Railway
-- Any static hosting service (GitHub Pages, AWS S3, etc.)
-
-For deployment, you'll need to:
-1. Build the app: `npm run build`
-2. Upload the `build/` folder contents to your hosting service
-3. Configure your server API URL in the environment variables
 
 ## Environment Variables
 

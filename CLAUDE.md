@@ -74,3 +74,35 @@ When making ANY UI modification:
 - Maintenance difficulties
 
 **NO EXCEPTIONS** - All UI changes must be applied to all three implementations.
+
+## README Consistency Requirements
+
+**WHENEVER ANY README content is modified, ensure consistency across all frontend implementations:**
+
+### Required README Sections (in order):
+1. **Title** - Technology-specific (e.g., "React.js Version", "Next.js Version")
+2. **Description** - Brief description with technology-specific details
+3. **Quick Start** - Installation and startup instructions
+4. **Features** - Common features + technology-specific advantages
+5. **Project Structure** - Directory structure (technology-specific paths)
+6. **API Integration** - How the frontend connects to backend
+7. **Development** - Development features and tools
+8. **Building for Production** - Build instructions
+9. **Testing** - Test setup and commands
+10. **Environment Variables** - Production deployment variables
+
+### Consistency Requirements:
+- **Common Content**: Features, authentication flow, and general descriptions should be identical
+- **Technology-Specific Content**: Build processes, development tools, and framework advantages should reflect the specific technology
+- **Port Numbers**: Maintain consistent port assignments (Next.js: 3001, React.js: 3002, Server: 3000)
+- **API Integration**: Document the specific proxy/connection method for each frontend
+
+### Technology-Specific Sections:
+- **React.js**: Focus on Create React App, proxy configuration, Jest testing
+- **Next.js**: Emphasize SSR, image optimization, built-in features, TypeScript readiness
+- **Vanilla JS**: Keep server README focused on backend API and static file serving
+
+**FAILURE TO MAINTAIN README CONSISTENCY WILL RESULT IN:**
+- Developer confusion about setup procedures
+- Inconsistent documentation across implementations
+- Different feature descriptions for identical functionality

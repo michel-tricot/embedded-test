@@ -1,8 +1,11 @@
-# 🚀 Airbyte Embedded Widget Demo - Turborepo Monorepo
+# 🚀 Airbyte Embedded Widget Demo
 
 **Experience the power of Airbyte's Embedded Widget in action!** 
 
-This is a Turborepo-powered monorepo containing the Airbyte Embedded Widget demo with multiple frontend implementations: Vanilla JavaScript, React, and Next.js.
+This is a Turborepo-powered monorepo containing the Airbyte Embedded Widget demo with multiple frontend implementations: 
+- Vanilla JavaScript 
+- React
+- Next.js
 
 ## ⚡ 2-Minute Quick Start
 
@@ -24,7 +27,7 @@ cp .env.example .env
 # From root directory - starts all apps simultaneously
 npm run dev
 ```
-**→ Server: http://localhost:3000**  
+**→ Server & Vanilla JS: http://localhost:3000**  
 **→ Next.js: http://localhost:3001**  
 **→ React: http://localhost:3002**
 
@@ -42,27 +45,11 @@ npm run dev --filter=@airbyte-demo/nextjs
 
 ## 🎮 Demo Flow
 
-1. **🔐 Enter Demo Password** - Protects the demo from public access
-2. **👤 Create User Account** - Simple email-based authentication  
-3. **🔗 Connect Your Data** - Launch the Airbyte Embedded Widget
+1. **🔐 Enter Demo Password**: Protects the demo from public access
+2. **👤 Create User Account**: Simple email-based authentication  
+3. **🔗 Connect Your Data**: Launch the Airbyte Embedded Widget
 
-![Demo Preview](https://via.placeholder.com/600x400?text=Demo+Preview)
-
-## 🏗️ What You Get
-
-| **Feature** | **Vanilla JS** | **React** | **Next.js** |
-|-------------|----------------|-----------|-------------|
-| 📦 Setup Time | 30 seconds | 1 minute | 1 minute |
-| 🎨 Modern UI | ✅ | ✅ | ✅ |
-| 🌙 Dark/Light Theme | ✅ | ✅ | ✅ |
-| 📱 Mobile Friendly | ✅ | ✅ | ✅ |
-| ⚡ Performance | Fast | Fast | Fastest |
-| 🔍 SEO Ready | Basic | No | Yes |
-| 📈 Production Ready | Good | Better | Best |
-
-## 🎯 For Airbyte Users
-
-### Get Your Credentials
+## Get Your Credentials
 1. **Contact Airbyte**: Reach out to [michel@airbyte.io](mailto:michel@airbyte.io) or [teo@airbyte.io](mailto:teo@airbyte.io) for Embedded access
 2. **Get Your Keys**: You'll receive your organization ID, client ID, and client secret
 3. **Update Config**: Add them to your `.env` file:
@@ -102,14 +89,6 @@ SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 - `npm run clean` - Clean build artifacts and node_modules
 - `npm run test` - Run tests across all apps
 
-### Architecture
-- **Monorepo**: Turborepo for efficient builds and caching
-- **Backend**: Express.js with Redis/file storage
-- **Authentication**: Two-layer (demo password + user email)
-- **Widget Integration**: Official Airbyte Embedded Widget
-- **Styling**: CSS custom properties (CSS variables)
-- **State Management**: Local state with persistence
-
 ## 🎨 Customization Examples
 
 ### Change Theme Colors
@@ -131,22 +110,13 @@ SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 
 ### 🌐 Complete Vercel Deployment (Recommended)
 
-Deploy both server and React app to Vercel with one-click buttons:
+Deploy both the server with one-click button:
 
-#### 1️⃣ Deploy Server First
 [![Deploy Server](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/michel-tricot/embedded-test&project-name=airbyte-demo-server&root-directory=server)
 
 **Manual server deploy:**
 ```bash
 cd server && npx vercel
-```
-
-#### 2️⃣ Deploy React App  
-[![Deploy React App](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/michel-tricot/embedded-test&project-name=airbyte-demo-react&root-directory=reactjs)
-
-**Manual React deploy:**
-```bash
-cd reactjs && npx vercel
 ```
 
 ### ⚙️ Environment Configuration
@@ -160,43 +130,10 @@ SONAR_AIRBYTE_CLIENT_ID=your_client_id
 SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 ```
 
-#### React Environment Variables (in Vercel dashboard):
-```bash
-REACT_APP_API_URL=https://your-server-app.vercel.app/api
-```
-
 ### 📚 Detailed Guides
 - 🔧 **Server documentation:** [`apps/server/README.md`](apps/server/README.md)
-- ⚛️ **React documentation:** See individual app README files
-- 🚀 **Next.js documentation:** See individual app README files
-
-### 🎯 Alternative Deployments
-
-#### Next.js → Vercel
-```bash
-cd nextjs && npx vercel
-# Set API_URL in next.config.js to your deployed server
-```
-
-#### Vanilla JS → Static Hosting
-- Deploy `server/static/` to any static host
-- Server must be deployed separately for API functionality
-
-## 🔧 Troubleshooting
-
-### Common Issues
-
-**Q: Widget won't open**  
-A: Check browser console. Ensure Airbyte script loads and your token is valid.
-
-**Q: "Password required" error**  
-A: Make sure `SONAR_AIRBYTE_WEBAPP_PASSWORD` is set in `server/.env`
-
-**Q: CORS errors**  
-A: Update `SONAR_AIRBYTE_ALLOWED_ORIGIN` to match your frontend URL
-
-**Q: Database errors**  
-A: Delete `users.db` file to reset. It will be recreated automatically.
+- ⚛️ **React documentation:** [`apps/nextjs/README.md`](apps/nextjs/README.md)
+- 🚀 **Next.js documentation:** [`apps/reactjs/README.md`](apps/reactjs/README.md)
 
 ## 🤝 Contributing
 
@@ -211,7 +148,7 @@ Found a bug? Want to add a feature? PRs welcome!
 ## 📞 Support
 
 - **Technical Issues**: Open a GitHub issue
-- **Airbyte Embedded Access**: Contact [michel@airbyte.io](mailto:michel@airbyte.io)
+- **Airbyte Embedded Access**: Reach out to [michel@airbyte.io](mailto:michel@airbyte.io) or [teo@airbyte.io](mailto:teo@airbyte.io)
 - **General Questions**: Check the [Airbyte Documentation](https://docs.airbyte.com)
 
 ---
