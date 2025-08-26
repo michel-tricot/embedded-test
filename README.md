@@ -110,25 +110,35 @@ SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 
 ### 🌐 Complete Vercel Deployment (Recommended)
 
-Deploy both the server with one-click button:
+Deploy the server with one-click button (includes environment variable setup):
 
-[![Deploy Server](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/michel-tricot/embedded-test&project-name=airbyte-demo-server&root-directory=server)
+[![Deploy Server](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/michel-tricot/embedded-test&project-name=airbyte-demo-server&root-directory=apps/server&env=SONAR_AIRBYTE_WEBAPP_PASSWORD,SONAR_AIRBYTE_ALLOWED_ORIGIN,SONAR_AIRBYTE_ORGANIZATION_ID,SONAR_AIRBYTE_CLIENT_ID,SONAR_AIRBYTE_CLIENT_SECRET,REDIS_URL&envDescription=Required%20environment%20variables%20for%20Airbyte%20Embedded%20Demo&envLink=https://github.com/michel-tricot/embedded-test/blob/main/apps/server/.env.example)
 
 **Manual server deploy:**
 ```bash
-cd server && npx vercel
+cd apps/server && npx vercel
 ```
 
 ### ⚙️ Environment Configuration
 
-#### Server Environment Variables (in Vercel dashboard):
+#### Required Environment Variables:
+
+**Airbyte Configuration:**
 ```bash
-SONAR_AIRBYTE_WEBAPP_PASSWORD=demopassword
-SONAR_AIRBYTE_ALLOWED_ORIGIN=https://your-react-app.vercel.app
-SONAR_AIRBYTE_ORGANIZATION_ID=your_org_id
+SONAR_AIRBYTE_WEBAPP_PASSWORD=your_demo_password
+SONAR_AIRBYTE_ALLOWED_ORIGIN=https://your-deployed-app.vercel.app
+SONAR_AIRBYTE_ORGANIZATION_ID=your_organization_id
 SONAR_AIRBYTE_CLIENT_ID=your_client_id
 SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 ```
+
+**Optional Services:**
+```bash
+# Redis for user session persistence (optional - falls back to local filesystem)
+REDIS_URL=redis://your-redis-url
+```
+
+> **💡 Tip**: The one-click Vercel button above will prompt you to enter all these variables during deployment!
 
 ### 📚 Detailed Guides
 - 🔧 **Server documentation:** [`apps/server/README.md`](apps/server/README.md)

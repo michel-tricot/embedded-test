@@ -113,12 +113,7 @@ app.listen(port, () => {
     console.log('SONAR_AIRBYTE_ORGANIZATION_ID:', process.env.SONAR_AIRBYTE_ORGANIZATION_ID);
     console.log('SONAR_AIRBYTE_CLIENT_ID:', process.env.SONAR_AIRBYTE_CLIENT_ID ? '***' : 'not set');
     console.log('SONAR_AIRBYTE_CLIENT_SECRET:', process.env.SONAR_AIRBYTE_CLIENT_SECRET ? '***' : 'not set');
-    console.log('SONAR_VERCEL_REDIS_URL:', process.env.SONAR_VERCEL_REDIS_URL ? '***' : 'not set');
-    console.log('SONAR_AWS_ACCESS_KEY:', process.env.SONAR_AWS_ACCESS_KEY ? '***' : 'not set');
-    console.log('SONAR_AWS_SECRET_ACCESS_KEY:', process.env.SONAR_AWS_SECRET_ACCESS_KEY ? '***' : 'not set');
-    console.log('SONAR_S3_BUCKET:', process.env.SONAR_S3_BUCKET);
-    console.log('SONAR_S3_BUCKET_REGION:', process.env.SONAR_S3_BUCKET_REGION);
-    console.log('SONAR_S3_BUCKET_PREFIX:', process.env.SONAR_S3_BUCKET_PREFIX);
+    console.log('REDIS_URL:', process.env.REDIS_URL ? '***' : 'not set');
 });
 
 module.exports = app;
