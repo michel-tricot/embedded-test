@@ -54,7 +54,7 @@ if (!process.env.REDIS_URL) {
     const { createClient } = require('redis');
 
     const client = createClient({
-        url: process.env.SONAR_VERCEL_REDIS_URL
+        url: process.env.REDIS_URL
     });
 
     let isConnected = false;
