@@ -3,7 +3,7 @@
 **Experience the power of Airbyte's Embedded Widget in action!** 
 
 This is a Turborepo-powered monorepo containing the Airbyte Embedded Widget demo with multiple frontend implementations: 
-- Vanilla JavaScript 
+- Vanilla JavaScript + Server
 - React
 - Next.js
 
