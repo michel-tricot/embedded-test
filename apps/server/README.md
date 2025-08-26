@@ -62,15 +62,8 @@ SONAR_AIRBYTE_ORGANIZATION_ID=your_organization_id
 SONAR_AIRBYTE_CLIENT_ID=your_client_id
 SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 
-# Redis for backend or fallback on local fs if empty.
+# Optional: Redis for user session persistence (falls back to local filesystem)
 REDIS_URL=redis://localhost:6379
-
-# Optional: AWS S3 configuration
-SONAR_AWS_ACCESS_KEY=your_aws_access_key
-SONAR_AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
-SONAR_S3_BUCKET=your_s3_bucket_name
-SONAR_S3_BUCKET_REGION=your_s3_bucket_region
-SONAR_S3_BUCKET_PREFIX=your_s3_bucket_prefix
 ```
 
 ## Project Structure

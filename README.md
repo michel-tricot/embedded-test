@@ -49,13 +49,13 @@ npm run dev --filter=@airbyte-demo/nextjs
 2. **👤 Create User Account**: Simple email-based authentication  
 3. **🔗 Connect Your Data**: Launch the Airbyte Embedded Widget
 
-## Get Your Credentials
+## 🔐 Get Your Credentials
 1. **Contact Airbyte**: Reach out to [michel@airbyte.io](mailto:michel@airbyte.io) or [teo@airbyte.io](mailto:teo@airbyte.io) for Embedded access
 2. **Get Your Keys**: You'll receive your organization ID, client ID, and client secret
 3. **Update Config**: Add them to your `.env` file:
 
 ```bash
-# server/.env
+# apps/server/.env
 SONAR_AIRBYTE_WEBAPP_PASSWORD=your_demo_password
 SONAR_AIRBYTE_ALLOWED_ORIGIN=http://localhost:3000
 SONAR_AIRBYTE_ORGANIZATION_ID=your_organization_id
@@ -142,8 +142,8 @@ REDIS_URL=redis://your-redis-url
 
 ### 📚 Detailed Guides
 - 🔧 **Server documentation:** [`apps/server/README.md`](apps/server/README.md)
-- ⚛️ **React documentation:** [`apps/nextjs/README.md`](apps/nextjs/README.md)
-- 🚀 **Next.js documentation:** [`apps/reactjs/README.md`](apps/reactjs/README.md)
+- ⚛️ **React documentation:** [`apps/reactjs/README.md`](apps/reactjs/README.md)
+- 🚀 **Next.js documentation:** [`apps/nextjs/README.md`](apps/nextjs/README.md)
 
 ## 🤝 Contributing
 
