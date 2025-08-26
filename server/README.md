@@ -74,7 +74,7 @@ SONAR_S3_BUCKET_PREFIX=your_s3_bucket_prefix
 
 ```
 server/
-├── server.js           # Main Express server
+├── index.js           # Main Express server
 ├── db.js              # User database operations
 ├── airbyte_api.js     # Airbyte API integration
 ├── static/            # Vanilla JS frontend files
