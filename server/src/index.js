@@ -3,7 +3,6 @@ require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const cors = require('cors');
 
 const db = require('./db');
 const api = require('./airbyte_api');
@@ -20,11 +19,6 @@ app.use(express.json());
 app.use(cookieParser());
 // Apply password protection to API routes
 app.use(requirePasswordForAPI);
-// CORS configuration for frontend
-app.use(cors({
-    origin: process.env.SONAR_AIRBYTE_ALLOWED_ORIGIN,
-    credentials: true
-}));
 
 // Serve static files from the static directory
 app.use(express.static(path.join(__dirname, '..', 'static')));
@@ -120,6 +114,7 @@ app.listen(port, () => {
     console.log('SONAR_AIRBYTE_ORGANIZATION_ID:', process.env.SONAR_AIRBYTE_ORGANIZATION_ID);
     console.log('SONAR_AIRBYTE_CLIENT_ID:', process.env.SONAR_AIRBYTE_CLIENT_ID ? '***' : 'not set');
     console.log('SONAR_AIRBYTE_CLIENT_SECRET:', process.env.SONAR_AIRBYTE_CLIENT_SECRET ? '***' : 'not set');
+    console.log('SONAR_VERCEL_REDIS_URL:', process.env.SONAR_VERCEL_REDIS_URL ? '***' : 'not set');
     console.log('SONAR_AWS_ACCESS_KEY:', process.env.SONAR_AWS_ACCESS_KEY ? '***' : 'not set');
     console.log('SONAR_AWS_SECRET_ACCESS_KEY:', process.env.SONAR_AWS_SECRET_ACCESS_KEY ? '***' : 'not set');
     console.log('SONAR_S3_BUCKET:', process.env.SONAR_S3_BUCKET);

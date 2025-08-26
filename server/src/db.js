@@ -1,4 +1,5 @@
 
+// Use Redis if running on Vercel otherwise store the user list on the local storage
 if (!process.env.VERCEL_URL) {
     const fs = require('node:fs').promises;
 
