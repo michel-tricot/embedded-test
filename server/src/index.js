@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(requirePasswordForAPI);
 // CORS configuration for frontend
 app.use(cors({
-    origin: process.env.SONAR_ALLOWED_ORIGIN,
+    origin: process.env.SONAR_AIRBYTE_ALLOWED_ORIGIN,
     credentials: true
 }));
 
@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 app.post('/api/login', (req, res) => {
     const { password } = req.body;
 
-    if (password === process.env.SONAR_WEBAPP_PASSWORD) {
+    if (password === process.env.SONAR_AIRBYTE_WEBAPP_PASSWORD) {
         res.cookie('appPassword', password, {
             maxAge: 24 * 60 * 60 * 1000, // 24 hours
             httpOnly: true,
@@ -72,9 +72,9 @@ app.post('/api/users', async (req, res) => {
 
     try {
         // Check if user already exists
-        let user = db.findUser(email);
+        let user = await db.findUser(email);
         if (!user) {
-            user = db.addUser(email);
+            user = await db.addUser(email);
         }
 
         setAuthCookie(res, email);
@@ -116,7 +116,7 @@ app.post('/api/airbyte/token', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
     console.log('Environment variables loaded:');
-    console.log('SONAR_ALLOWED_ORIGIN:', process.env.SONAR_ALLOWED_ORIGIN);
+    console.log('SONAR_AIRBYTE_ALLOWED_ORIGIN:', process.env.SONAR_AIRBYTE_ALLOWED_ORIGIN);
     console.log('SONAR_AIRBYTE_ORGANIZATION_ID:', process.env.SONAR_AIRBYTE_ORGANIZATION_ID);
     console.log('SONAR_AIRBYTE_CLIENT_ID:', process.env.SONAR_AIRBYTE_CLIENT_ID ? '***' : 'not set');
     console.log('SONAR_AIRBYTE_CLIENT_SECRET:', process.env.SONAR_AIRBYTE_CLIENT_SECRET ? '***' : 'not set');

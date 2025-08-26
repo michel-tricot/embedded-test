@@ -42,7 +42,7 @@ async function generateWidgetToken(externalUserId) {
         console.log('Generating widget token for user:', {
                 external_user_id: externalUserId,
                 organization_id: process.env.SONAR_AIRBYTE_ORGANIZATION_ID,
-                allowed_origin: process.env.SONAR_ALLOWED_ORIGIN,
+                allowed_origin: process.env.SONAR_AIRBYTE_ALLOWED_ORIGIN,
             });
 
         const response = await fetch('https://api.airbyte.ai/api/v1/embedded/scoped-token', {
@@ -55,7 +55,7 @@ async function generateWidgetToken(externalUserId) {
             body: JSON.stringify({
                 external_user_id: externalUserId,
                 organization_id: process.env.SONAR_AIRBYTE_ORGANIZATION_ID,
-                allowed_origin: process.env.SONAR_ALLOWED_ORIGIN,
+                allowed_origin: process.env.SONAR_AIRBYTE_ALLOWED_ORIGIN,
             })
         });
 

@@ -14,8 +14,8 @@ cd embedded-test/server
 npm install
 
 # Set demo password (required)
-echo "SONAR_WEBAPP_PASSWORD=demopassword" > .env
-echo "SONAR_ALLOWED_ORIGIN=http://localhost:3000" >> .env
+echo "SONAR_AIRBYTE_WEBAPP_PASSWORD=demopassword" > .env
+echo "SONAR_AIRBYTE_ALLOWED_ORIGIN=http://localhost:3000" >> .env
 
 # Start demo
 npm run dev
@@ -68,8 +68,8 @@ npm install && npm run dev
 
 ```bash
 # server/.env
-SONAR_WEBAPP_PASSWORD=your_demo_password
-SONAR_ALLOWED_ORIGIN=http://localhost:3000
+SONAR_AIRBYTE_WEBAPP_PASSWORD=your_demo_password
+SONAR_AIRBYTE_ALLOWED_ORIGIN=http://localhost:3000
 SONAR_AIRBYTE_ORGANIZATION_ID=your_organization_id
 SONAR_AIRBYTE_CLIENT_ID=your_client_id
 SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
@@ -140,8 +140,8 @@ cd reactjs && npx vercel
 
 #### Server Environment Variables (in Vercel dashboard):
 ```bash
-SONAR_WEBAPP_PASSWORD=demopassword
-SONAR_ALLOWED_ORIGIN=https://your-react-app.vercel.app
+SONAR_AIRBYTE_WEBAPP_PASSWORD=demopassword
+SONAR_AIRBYTE_ALLOWED_ORIGIN=https://your-react-app.vercel.app
 SONAR_AIRBYTE_ORGANIZATION_ID=your_org_id
 SONAR_AIRBYTE_CLIENT_ID=your_client_id
 SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
@@ -176,10 +176,10 @@ cd nextjs && npx vercel
 A: Check browser console. Ensure Airbyte script loads and your token is valid.
 
 **Q: "Password required" error**  
-A: Make sure `SONAR_WEBAPP_PASSWORD` is set in `server/.env`
+A: Make sure `SONAR_AIRBYTE_WEBAPP_PASSWORD` is set in `server/.env`
 
 **Q: CORS errors**  
-A: Update `SONAR_ALLOWED_ORIGIN` to match your frontend URL
+A: Update `SONAR_AIRBYTE_ALLOWED_ORIGIN` to match your frontend URL
 
 **Q: Database errors**  
 A: Delete `users.db` file to reset. It will be recreated automatically.

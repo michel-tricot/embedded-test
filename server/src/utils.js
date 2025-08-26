@@ -12,7 +12,7 @@ function setAuthCookie(res, email) {
 }
 
 // Password protection middleware for API routes
-function requirePasswordForAPI(req, res, next) {
+async function requirePasswordForAPI(req, res, next) {
     // Skip password check for login endpoint
     if (req.path === '/api/login') {
         return next();
@@ -20,7 +20,7 @@ function requirePasswordForAPI(req, res, next) {
 
     // Only apply password protection to API routes
     if (req.path.startsWith('/api/')) {
-        const isAuthenticated = req.cookies.appPassword === process.env.SONAR_WEBAPP_PASSWORD;
+        const isAuthenticated = req.cookies.appPassword === process.env.SONAR_AIRBYTE_WEBAPP_PASSWORD;
         if (!isAuthenticated) {
             return res.status(401).json({ error: 'Password required' });
         }
@@ -30,7 +30,7 @@ function requirePasswordForAPI(req, res, next) {
     const userEmail = req.cookies.userEmail;
     if (userEmail) {
         try {
-            const user = db.findUser(decodeURIComponent(userEmail));
+            const user = await db.findUser(decodeURIComponent(userEmail));
             if (user) {
                 req.user = user;
             }
