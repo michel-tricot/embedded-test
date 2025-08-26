@@ -96,7 +96,8 @@ app.post('/api/airbyte/token', async (req, res) => {
     }
 
     try {
-        const widgetToken = await api.generateWidgetToken(req.user.email);
+        const { allowedOrigin } = req.body;
+        const widgetToken = await api.generateWidgetToken(req.user.email, allowedOrigin);
         res.json({ token: widgetToken });
     } catch (error) {
         console.error('Error generating widget token:', error);

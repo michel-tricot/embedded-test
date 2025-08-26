@@ -111,7 +111,8 @@ export default function Home() {
 
   const handleConnectData = async () => {
     try {
-      const { data } = await apiClient.getAirbyteToken();
+      const allowedOrigin = typeof window !== 'undefined' ? window.location.origin : null;
+      const { data } = await apiClient.getAirbyteToken(allowedOrigin);
       
       if (typeof window !== 'undefined' && window.AirbyteEmbeddedWidget) {
         const widget = new window.AirbyteEmbeddedWidget({

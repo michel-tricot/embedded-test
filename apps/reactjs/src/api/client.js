@@ -64,9 +64,10 @@ class ApiClient {
   }
 
   // Airbyte endpoints
-  async getAirbyteToken() {
+  async getAirbyteToken(allowedOrigin = null) {
     return this.request('/airbyte/token', {
       method: 'POST',
+      body: allowedOrigin ? { allowedOrigin } : {},
     });
   }
 }

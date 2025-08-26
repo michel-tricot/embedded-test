@@ -102,7 +102,7 @@ function App() {
 
   const handleConnectData = async () => {
     try {
-      const { data } = await apiClient.getAirbyteToken();
+      const { data } = await apiClient.getAirbyteToken(window.location.origin);
       
       const widget = new window.AirbyteEmbeddedWidget({
         token: data.token

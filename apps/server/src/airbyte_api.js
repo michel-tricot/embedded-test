@@ -33,11 +33,19 @@ async function getAccessToken() {
 /**
  * Generates a widget token for the Airbyte API
  * @param {string} externalUserId - The ID of the external user
+ * @param {string} allowedOrigin - The allowed origin (optional, defaults to env variable)
  * @returns {Promise<string>} The widget token
  */
-async function generateWidgetToken(externalUserId) {
+async function generateWidgetToken(externalUserId, allowedOrigin = null) {
     try {
         const accessToken = await getAccessToken();
+
+        // Use provided allowedOrigin if it contains localhost, otherwise use env variable
+        const origin = allowedOrigin && allowedOrigin.includes('localhost') 
+            ? allowedOrigin 
+            : process.env.SONAR_AIRBYTE_ALLOWED_ORIGIN;
+
+        console.log(`Generating widget token for user ${externalUserId} with origin ${origin}`);
 
         const response = await fetch('https://api.airbyte.ai/api/v1/embedded/scoped-token', {
             method: 'POST',
@@ -49,7 +57,7 @@ async function generateWidgetToken(externalUserId) {
             body: JSON.stringify({
                 external_user_id: externalUserId,
                 organization_id: process.env.SONAR_AIRBYTE_ORGANIZATION_ID,
-                allowed_origin: process.env.SONAR_AIRBYTE_ALLOWED_ORIGIN,
+                allowed_origin: origin,
             })
         });
 
