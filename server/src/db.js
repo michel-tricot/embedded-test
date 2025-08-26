@@ -57,17 +57,13 @@ if (!process.env.REDIS_URL || process.env.REDIS_URL.trim() === '') {
         url: process.env.REDIS_URL
     });
 
-    let isConnected = false;
-
     client.on('error', (err) => {
         console.log('Redis Client Error', err);
-        isConnected = false;
     });
 
     const ensureConnection = async () => {
-        if (!isConnected) {
+        if (!client.isOpen) {
             await client.connect();
-            isConnected = true;
         }
     };
 
