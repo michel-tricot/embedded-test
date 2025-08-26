@@ -1,5 +1,5 @@
 {
-  "name": "airbyte-embedded-demo-react",
+  "name": "@airbyte-demo/reactjs",
   "version": "1.0.0",
   "description": "React version of Airbyte Embedded Widget demo",
   "private": true,
@@ -9,14 +9,16 @@
     "react-scripts": "5.0.1"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nodemon": "^3.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "dev": "react-scripts start",
+    "start": "cross-env PORT=3002 react-scripts start",
+    "dev": "cross-env PORT=3002 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clean": "rm -rf node_modules build .turbo"
   },
   "eslintConfig": {
     "extends": [
@@ -36,5 +38,6 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "."
+  "homepage": ".",
+  "proxy": "http://localhost:3000"
 }

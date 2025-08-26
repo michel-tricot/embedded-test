@@ -87,6 +87,12 @@
             try {
                 const response = await fetch('/api/airbyte/token', {
                     method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        allowedOrigin: window.location.origin
+                    }),
                 });
 
                 if (!response.ok) {

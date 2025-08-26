@@ -1,13 +1,15 @@
 {
-  "name": "airbyte-embedded-demo-server",
+  "name": "@airbyte-demo/server",
   "version": "1.0.0",
   "description": "Backend server for Airbyte Embedded Widget demo",
   "main": "src/index.js",
+  "private": true,
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "build": "echo 'No build step needed'",
-    "vercel-build": "echo 'Build complete'"
+    "vercel-build": "echo 'Build complete'",
+    "clean": "rm -rf node_modules .turbo"
   },
   "dependencies": {
     "cookie-parser": "^1.4.7",

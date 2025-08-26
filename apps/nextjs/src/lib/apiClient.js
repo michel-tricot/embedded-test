@@ -1,5 +1,5 @@
 class ApiClient {
-  constructor(baseURL = process.env.REACT_APP_API_URL || '/api') {
+  constructor(baseURL = '/api') {
     this.baseURL = baseURL;
   }
 
@@ -64,9 +64,10 @@ class ApiClient {
   }
 
   // Airbyte endpoints
-  async getAirbyteToken() {
+  async getAirbyteToken(allowedOrigin = null) {
     return this.request('/airbyte/token', {
       method: 'POST',
+      body: allowedOrigin ? { allowedOrigin } : {},
     });
   }
 }

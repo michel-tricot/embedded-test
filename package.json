@@ -1,0 +1,24 @@
+{
+  "name": "airbyte-embedded-demo",
+  "version": "1.0.0",
+  "description": "Airbyte Embedded Widget demo with multiple frontend implementations",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "clean": "turbo clean",
+    "test": "turbo test"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  },
+  "packageManager": "npm@10.0.0",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

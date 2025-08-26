@@ -2,4 +2,8 @@ node_modules
 .env
 .idea
 .DS_Store
-nextjs-vite/.next
+.next
+.turbo
+.vercel
+.claude
+users.db
