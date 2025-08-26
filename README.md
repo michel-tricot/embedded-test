@@ -1,43 +1,44 @@
-# 🚀 Airbyte Embedded Widget Demo
+# 🚀 Airbyte Embedded Widget Demo - Turborepo Monorepo
 
 **Experience the power of Airbyte's Embedded Widget in action!** 
 
-This demo showcases how to integrate Airbyte's data movement capabilities directly into your application using three different frontend approaches: Vanilla JavaScript, React, and Next.js.
+This is a Turborepo-powered monorepo containing the Airbyte Embedded Widget demo with multiple frontend implementations: Vanilla JavaScript, React, and Next.js.
 
 ## ⚡ 2-Minute Quick Start
 
-### 🔧 Option 1: Fastest Demo (Vanilla JS)
+### 🔧 Setup (All Apps)
 ```bash
-# Clone and start
+# Clone and install dependencies for all apps
 git clone https://github.com/michel-tricot/embedded-test.git
-cd embedded-test/server
+cd embedded-test
 npm install
 
-# Set demo password (required)
-echo "SONAR_AIRBYTE_WEBAPP_PASSWORD=demopassword" > .env
-echo "SONAR_AIRBYTE_ALLOWED_ORIGIN=http://localhost:3000" >> .env
+# Configure server environment
+cd apps/server
+cp .env.example .env
+# Edit .env with your credentials
+```
 
-# Start demo
+### 🚀 Run All Apps
+```bash
+# From root directory - starts all apps simultaneously
 npm run dev
 ```
-**→ Open http://localhost:3000**  
-**→ Password: `demopassword`**
+**→ Server: http://localhost:3000**  
+**→ Next.js: http://localhost:3001**  
+**→ React: http://localhost:3002**
 
-### 🎯 Option 2: Modern React Experience  
+### 🎯 Run Individual Apps
 ```bash
-# After setting up server above, in a new terminal:
-cd reactjs
-npm install && npm run dev
-```
-**→ Open http://localhost:3001**
+# Run only the server
+npm run dev --filter=@airbyte-demo/server
 
-### 🚀 Option 3: Next.js Production-Ready
-```bash
-# After setting up server above, in a new terminal:
-cd nextjs  
-npm install && npm run dev
+# Run only React app  
+npm run dev --filter=@airbyte-demo/reactjs
+
+# Run only Next.js app
+npm run dev --filter=@airbyte-demo/nextjs
 ```
-**→ Open http://localhost:3002**
 
 ## 🎮 Demo Flow
 
@@ -81,17 +82,29 @@ SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
 - **Node.js 18+** (uses native fetch API)
 - **Modern browser** (Chrome, Firefox, Safari, Edge)
 
-### Project Structure
+### Turborepo Structure
 ```
 📁 embedded-test/
-├── 🔧 server/           # Express.js backend + vanilla demo
-├── ⚛️  reactjs/          # Create React App version  
-├── 🚀 nextjs/           # Next.js production version
-└── 📖 README.md         # You are here!
+├── 📁 apps/
+│   ├── 🔧 server/           # Express.js backend (@airbyte-demo/server)
+│   ├── ⚛️  reactjs/          # React app (@airbyte-demo/reactjs)  
+│   └── 🚀 nextjs/           # Next.js app (@airbyte-demo/nextjs)
+├── 📁 packages/             # Shared packages (empty for now)
+├── 📄 package.json          # Root workspace configuration
+├── 📄 turbo.json            # Turborepo configuration
+└── 📖 README.md             # You are here!
 ```
 
+### Available Commands
+- `npm run dev` - Start all apps in development
+- `npm run build` - Build all apps for production
+- `npm run lint` - Lint all apps
+- `npm run clean` - Clean build artifacts and node_modules
+- `npm run test` - Run tests across all apps
+
 ### Architecture
-- **Backend**: Express.js with SQLite database
+- **Monorepo**: Turborepo for efficient builds and caching
+- **Backend**: Express.js with Redis/file storage
 - **Authentication**: Two-layer (demo password + user email)
 - **Widget Integration**: Official Airbyte Embedded Widget
 - **Styling**: CSS custom properties (CSS variables)
@@ -153,8 +166,9 @@ REACT_APP_API_URL=https://your-server-app.vercel.app/api
 ```
 
 ### 📚 Detailed Guides
-- 🔧 **Server deployment:** [`server/DEPLOY.md`](server/DEPLOY.md)
-- ⚛️ **React deployment:** [`reactjs/DEPLOY.md`](reactjs/DEPLOY.md)
+- 🔧 **Server documentation:** [`apps/server/README.md`](apps/server/README.md)
+- ⚛️ **React documentation:** See individual app README files
+- 🚀 **Next.js documentation:** See individual app README files
 
 ### 🎯 Alternative Deployments
 

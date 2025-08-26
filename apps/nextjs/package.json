@@ -1,0 +1,23 @@
+{
+  "name": "@airbyte-demo/nextjs",
+  "version": "1.0.0",
+  "description": "Next.js version of Airbyte Embedded Widget demo",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env PORT=3001 next dev",
+    "build": "next build",
+    "start": "cross-env PORT=3001 next start",
+    "lint": "next lint",
+    "clean": "rm -rf node_modules .next .turbo"
+  },
+  "dependencies": {
+    "cross-env": "^10.0.0",
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0"
+  }
+}

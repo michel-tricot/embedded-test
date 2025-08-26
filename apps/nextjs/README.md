@@ -14,7 +14,7 @@ This is a Next.js version of the Airbyte Embedded Widget demo application.
    npm run dev
    ```
 
-   The Next.js app will run on `http://localhost:3001` (or next available port)
+   The Next.js app will run on `http://localhost:3001`
 
 3. **Make sure the backend server is running:**
    ```bash

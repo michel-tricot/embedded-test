@@ -11,8 +11,6 @@ const {setAuthCookie, requirePasswordForAPI} = require("./utils");
 const app = express();
 const port = 3000;
 
-console.log(process.env);
-
 // Middleware to parse JSON bodies
 app.use(express.json());
 // Middleware to parse cookies
