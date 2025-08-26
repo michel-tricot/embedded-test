@@ -54,10 +54,10 @@ Required configuration in `.env`:
 
 ```bash
 # Demo password
-SONAR_WEBAPP_PASSWORD=your_demo_password
+SONAR_AIRBYTE_WEBAPP_PASSWORD=your_demo_password
 
 # Airbyte credentials
-SONAR_ALLOWED_ORIGIN=http://localhost:3000
+SONAR_AIRBYTE_ALLOWED_ORIGIN=http://localhost:3000
 SONAR_AIRBYTE_ORGANIZATION_ID=your_organization_id
 SONAR_AIRBYTE_CLIENT_ID=your_client_id
 SONAR_AIRBYTE_CLIENT_SECRET=your_client_secret
@@ -74,7 +74,7 @@ SONAR_S3_BUCKET_PREFIX=your_s3_bucket_prefix
 
 ```
 server/
-├── server.js           # Main Express server
+├── index.js           # Main Express server
 ├── db.js              # User database operations
 ├── airbyte_api.js     # Airbyte API integration
 ├── static/            # Vanilla JS frontend files
@@ -116,5 +116,5 @@ This server can be deployed to any Node.js hosting service:
 
 Make sure to:
 1. Set environment variables in your hosting platform
-2. Update `SONAR_ALLOWED_ORIGIN` to your production domain
+2. Update `SONAR_AIRBYTE_ALLOWED_ORIGIN` to your production domain
 3. Use HTTPS in production (sets `secure` cookie flag automatically)

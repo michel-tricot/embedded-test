@@ -1,76 +1,38 @@
 require('dotenv').config();
 
 const express = require('express');
-const path = require('path');
-// Use in-memory database for Vercel deployment, SQLite for local development
-const db = process.env.VERCEL ? require('./db-vercel') : require('./db');
-const api = require('./airbyte_api');
-const app = express();
-const port = 3000;
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
-// Helper function to set authentication cookie
-function setAuthCookie(res, email) {
-    res.cookie('userEmail', email, {
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
-    });
-}
+const db = require('./db');
+const api = require('./airbyte_api');
+const {setAuthCookie, requirePasswordForAPI} = require("./utils");
+
+const app = express();
+const port = 3001;
+
+console.log(process.env);
 
 // Middleware to parse JSON bodies
 app.use(express.json());
 // Middleware to parse cookies
 app.use(cookieParser());
+// Apply password protection to API routes
+app.use(requirePasswordForAPI);
 
-// Serve static files from the static directory (no password protection)
-app.use(express.static(path.join(__dirname, 'static')));
+// Serve static files from the static directory
+app.use(express.static(path.join(__dirname, '..', 'static')));
 
 // Route for the root path (no password protection)
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'static/index.html'));
+    res.sendFile(path.join(__dirname, '..', 'static', 'index.html'));
 });
-
-// Password protection middleware for API routes
-function requirePasswordForAPI(req, res, next) {
-    // Skip password check for login endpoint
-    if (req.path === '/api/login') {
-        return next();
-    }
-
-    // Only apply password protection to API routes
-    if (req.path.startsWith('/api/')) {
-        const isAuthenticated = req.cookies.appPassword === process.env.SONAR_WEBAPP_PASSWORD;
-        if (!isAuthenticated) {
-            return res.status(401).json({ error: 'Password required' });
-        }
-    }
-
-    // Set user if authenticated
-    const userEmail = req.cookies.userEmail;
-    if (userEmail) {
-        try {
-            const user = db.findUser(decodeURIComponent(userEmail));
-            if (user) {
-                req.user = user;
-            }
-        } catch (error) {
-            console.error('Error reading user from cookie:', error);
-        }
-    }
-
-    next();
-}
-
-// Apply password protection to API routes
-app.use(requirePasswordForAPI);
 
 // Endpoint to handle login
 app.post('/api/login', (req, res) => {
     const { password } = req.body;
 
-    if (password === process.env.SONAR_WEBAPP_PASSWORD) {
+    if (password === process.env.SONAR_AIRBYTE_WEBAPP_PASSWORD) {
         res.cookie('appPassword', password, {
             maxAge: 24 * 60 * 60 * 1000, // 24 hours
             httpOnly: true,
@@ -104,15 +66,13 @@ app.post('/api/users', async (req, res) => {
 
     try {
         // Check if user already exists
-        const existingUser = db.findUser(email);
-        if (existingUser) {
-            setAuthCookie(res, email);
-            return res.json(existingUser);
+        let user = await db.findUser(email);
+        if (!user) {
+            user = await db.addUser(email);
         }
 
-        const newUser = db.addUser(email);
         setAuthCookie(res, email);
-        res.status(201).json(newUser);
+        res.status(201).json(user);
     } catch (error) {
         if (error.message === 'Email already exists') {
             return res.status(400).json({ error: error.message });
@@ -150,13 +110,16 @@ app.post('/api/airbyte/token', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
     console.log('Environment variables loaded:');
-    console.log('SONAR_ALLOWED_ORIGIN:', process.env.SONAR_ALLOWED_ORIGIN);
+    console.log('SONAR_AIRBYTE_ALLOWED_ORIGIN:', process.env.SONAR_AIRBYTE_ALLOWED_ORIGIN);
     console.log('SONAR_AIRBYTE_ORGANIZATION_ID:', process.env.SONAR_AIRBYTE_ORGANIZATION_ID);
     console.log('SONAR_AIRBYTE_CLIENT_ID:', process.env.SONAR_AIRBYTE_CLIENT_ID ? '***' : 'not set');
     console.log('SONAR_AIRBYTE_CLIENT_SECRET:', process.env.SONAR_AIRBYTE_CLIENT_SECRET ? '***' : 'not set');
+    console.log('SONAR_VERCEL_REDIS_URL:', process.env.SONAR_VERCEL_REDIS_URL ? '***' : 'not set');
     console.log('SONAR_AWS_ACCESS_KEY:', process.env.SONAR_AWS_ACCESS_KEY ? '***' : 'not set');
     console.log('SONAR_AWS_SECRET_ACCESS_KEY:', process.env.SONAR_AWS_SECRET_ACCESS_KEY ? '***' : 'not set');
     console.log('SONAR_S3_BUCKET:', process.env.SONAR_S3_BUCKET);
     console.log('SONAR_S3_BUCKET_REGION:', process.env.SONAR_S3_BUCKET_REGION);
     console.log('SONAR_S3_BUCKET_PREFIX:', process.env.SONAR_S3_BUCKET_PREFIX);
 });
+
+module.exports = app;
