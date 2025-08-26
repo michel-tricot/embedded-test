@@ -1,6 +1,6 @@
 
 // Use Redis if setup, otherwise fallback on local fs
-if (!process.env.REDIS_URL) {
+if (!process.env.REDIS_URL || process.env.REDIS_URL.trim() === '') {
     const fs = require('node:fs').promises;
 
     const db = {
